@@ -1,0 +1,735 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Playfair+Display:wght@600&display=swap');
+
+
+/* Estilos generales */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-image: url("fondo.png"); /* imagen de fondo */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+/* --- HEADER --- */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: transparent;
+    padding: 20px 40px;
+    position: relative;
+    z-index: 10;
+}
+
+.logo {
+    width: 200px;
+    height: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Navegación */
+.nav {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-btn {
+    background-color: rgb(255, 253, 253);
+    color: rgb(8, 8, 8);
+    text-decoration: none;
+    padding: 12px 25px;
+    border-radius: 25px;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.6);
+}
+
+.nav-btn:hover {
+    opacity: 0.8;
+}
+
+/* Iconos */
+.icons {
+    display: flex;
+    gap: 15px;
+}
+
+.icon {
+    background-color: #999;
+    color: black;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    font-size: 20px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.icon:hover {
+    background-color: #ccc;
+    transform: scale(1.05);
+}
+
+/* --- SECCIÓN PRINCIPAL --- */
+.main {
+    padding: 60px 0;
+    background: none; /* 💡 quitamos el color blanco */
+}
+
+.empresa {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.imagen-fondo {
+    width: 90%;
+    height: 500px; /* puedes ajustar */
+    border-radius: 20px;
+    background: none; /* sin fondo adicional */
+    box-shadow: none; /* sin sombras */
+}
+
+/* --- FOOTER --- */
+.footer {
+    background-color: rgba(153, 153, 153, 0.8);
+    color: black;
+    text-align: center;
+    padding: 25px;
+    font-weight: bold;
+    border-radius: 20px 20px 0 0;
+    backdrop-filter: blur(3px); /* un toque moderno */
+}
+
+.footer {
+    background-color: #e2c6a3; /* color beige similar */
+    color: #3b2f23;
+    padding: 40px 80px;
+    font-family: 'Poppins', sans-serif;
+    border-top: 3px solid #d4a373;
+    backdrop-filter: blur(5px);
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+/* columnas */
+.footer-left, .footer-center, .footer-right {
+    flex: 1;
+    min-width: 250px;
+}
+
+.footer-logo {
+    font-family: 'Brush Script MT', cursive;
+    font-size: 38px;
+    color: #d27f39;
+}
+
+.footer h3 {
+    color: #333;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+}
+
+.footer p, .footer li, .footer a {
+    font-size: 15px;
+    color: #444;
+    line-height: 1.6;
+
+}
+
+.footer a:hover {
+    color: #d27f39;
+}
+
+/* input suscripción */
+.footer-input {
+    width: 100%;
+    padding: 8px;
+    border: none;
+    border-bottom: 2px solid #3b2f23;
+    background: transparent;
+    color: #3b2f23;
+    outline: none;
+}
+
+.footer-btn {
+    margin-top: 10px;
+    background-color: #3b2f23;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.footer-btn:hover {
+    opacity: 0.8;
+}
+
+/* redes sociales */
+.footer-social {
+    margin-top: 15px;
+}
+
+.social-icon {
+    font-size: 22px;
+    margin-right: 10px;
+    color: #3b2f23;
+    text-decoration: none;
+}
+
+.social-icon:hover {
+    transform: scale(1.2);
+}
+
+/* parte inferior */
+.footer-bottom {
+    border-top: 1px solid rgba(0,0,0,0.2);
+    margin-top: 20px;
+    padding-top: 10px;
+    font-size: 14px;
+    text-align: center;
+    color: #555;
+
+}
+
+/* --- SECCIÓN NOSOTROS --- */
+.nosotros-section {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    border-radius: 20px;
+    margin: 40px auto;
+    width: 90%;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
+/* La imagen ahora rellena todo el fondo */
+.nosotros-section::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: url("mockup.jpg") center/cover no-repeat;
+    opacity: 0.4; /* 🔹 controla qué tan translúcida se ve la imagen */
+    filter: blur(2px);
+    z-index: 0;
+}
+
+/* Contenedor de texto centrado */
+.nosotros-contenido {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    color: #3b2f23;
+    padding: 60px;
+    background: rgba(255, 255, 255, 0.3); /* un leve fondo blanco translúcido */
+    border-radius: 20px;
+    backdrop-filter: blur(4px);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.nosotros-contenido {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center; /* 🔹 centra ambos elementos */
+    gap: 40px;
+    text-align: center; /* 🔹 centra también el texto */
+}
+
+
+/* Ajustes del texto */
+.nosotros-texto {
+    flex: 1 1 400px;
+    max-width: 600px;
+    text-align: center; /* centra el texto */
+    color: #2c1a0d; /* color más fuerte tipo marrón oscuro */
+    font-family: 'Poppins', sans-serif; /* fuente más moderna */
+    font-weight: 500; /* texto más grueso */
+    text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.5); /* brillo suave */
+}
+
+
+.nosotros-texto h2 {
+    font-size: 40px;
+    color: #3b1f0c; /* más fuerte */
+    font-family: 'Playfair Display', serif; /* estilo elegante */
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 6px rgba(255,255,255,0.4);
+}
+
+
+.nosotros-texto p {
+    color: #2e1a09; /* más oscuro */
+    line-height: 1.8;
+    margin-bottom: 20px;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+
+/* Eliminamos el bloque de imagen visible (ya se usa como fondo) */
+.nosotros-imagen {
+    display: none;
+}
+
+/* --- SECCIÓN CONTACTO --- */
+.contacto-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh; /* 💡 igual que .nosotros-section */
+    border-radius: 20px;
+    margin: 40px auto;
+    width: 90%;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    position: relative;
+}
+
+/* Cuadro contenedor del formulario */
+.contacto-cuadro {
+    width: 90%;
+    min-height: 600px;
+    background-color: #e2c6a3; /* igual al fondo translúcido del cuadro "nosotros" */
+    border-radius: 20px;
+    padding: 60px 80px;
+    backdrop-filter: blur(4px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    position: relative;
+    z-index: 1;
+}
+
+/* Ajuste visual del fondo para armonizar */
+.contacto-section::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: url("fondo.png") center/cover no-repeat;
+    opacity: 0.4;
+    filter: blur(2px);
+    z-index: 0;
+}
+
+/* Aseguramos que el contenido quede por encima */
+.contacto-cuadro * {
+    position: relative;
+    z-index: 1;
+}
+
+.contacto-cuadro h2 {
+    font-family: 'Playfair Display', serif;
+    color: #3b2f23;
+    margin-bottom: 35px;
+    font-size: 32px;
+}
+
+/* Formulario */
+.contacto-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    width: 100%; /* ocupa todo el ancho del cuadro */
+    max-width: 750px;
+    gap: 25px;
+}
+
+/* Campos más pequeños */
+.contacto-form input,
+.contacto-form textarea {
+    width: 90%;
+    padding: 18px 22px;
+    border-radius: 15px;
+    border: none;
+    background-color: #5c5c5c;
+    color: #fff;
+    font-size: 18px;
+    font-family: 'Poppins', sans-serif;
+    align-self: center;
+}
+
+.contacto-form input::placeholder,
+.contacto-form textarea::placeholder {
+    color: #ddd;
+}
+
+/* Campo de teléfono más corto */
+.campo-telefono {
+    width: 70%;
+    align-self: center;
+}
+
+/* Botón más pequeño */
+.btn-enviar {
+    background-color: #3b2f23;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 28px;
+    font-size: 15px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: 0.3s;
+}
+
+.btn-enviar:hover {
+    background-color: #d27f39;
+}
+
+.mensaje-exito {
+    background-color: #d4edda;
+    border: 1px solid #155724;
+    color: #155724;
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 20px;
+    font-weight: 500;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+/* Botón con el mismo estilo que los campos de texto */
+.campo-boton {
+    width: 100%;
+    padding: 18px;
+    border-radius: 15px;
+    border: none;
+    background-color:#3b2f23; /* mismo color que los campos */
+    color: #fff;
+    font-size: 18px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.campo-boton:hover {
+    background-color: #d27f39;
+    transform: scale(1.03); /* tono oscuro al pasar el cursor */
+}
+
+/* --- PRODUCTOS --- */
+
+.productos-main {
+    padding: 40px 0;
+    width: 90%;
+    margin: auto;
+    text-align: center;
+}
+
+.titulo-productos {
+    font-family: 'Playfair Display', serif;
+    font-size: 35px;
+    color: #3b2f23;
+    margin-bottom: 40px;
+    text-shadow: 2px 2px 3px rgba(255,255,255,0.4);
+}
+
+.contenedor-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 30px;
+}
+
+.card-producto {
+    width: 260px; /* tamaño exacto de card estilo ejemplo */
+    background-color: rgba(255,255,255,0.9);
+    border-radius: 18px;
+    padding: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    transition: transform 0.25s ease;
+    text-align: left;
+}
+
+.card-producto:hover {
+    transform: scale(1.03);
+}
+
+.card-imagen {
+    width: 100%;
+    height: 150px;
+    background-color: #ddd; /* fondo gris por si no hay imagen */
+    border-radius: 12px;
+    margin-bottom: 10px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+}
+
+.card-info h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: bold;
+    color: #222;
+}
+
+.card-info p {
+    font-size: 14px;
+    color: #333;
+    margin-top: 8px;
+}
+
+.card-btn {
+    margin-top: 15px;
+    background-color: #3b2f23;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.card-btn:hover {
+    background-color: #d27f39;
+}
+
+/* ===== MODAL DE PRODUCTOS ===== */
+
+.modal-oculto {
+    display: none;
+}
+
+#modalProducto {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0,0,0,0.6);
+    z-index: 9999;
+}
+
+.modal-contenido {
+    background: #fff;
+    width: 90%;
+    max-width: 500px;
+    padding: 25px;
+    border-radius: 20px;
+    text-align: center;
+    position: relative;
+}
+
+.cerrar-modal {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    font-size: 28px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+#modal-imagen {
+    width: 100%;
+    border-radius: 15px;
+    margin-bottom: 20px;
+}
+
+#modal-titulo {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #3b2f23;
+}
+
+#modal-descripcion {
+    font-size: 16px;
+    color: #444;
+}
+
+/* ====== DETALLE DE PRODUCTO ====== */
+
+.detalle-container {
+    display: flex;
+    width: 90%;
+    margin: 50px auto;
+    gap: 50px;
+    align-items: flex-start;
+}
+
+/* ------- GALERÍA ------- */
+
+.detalle-galeria {
+    display: flex;
+    gap: 20px;
+}
+
+.detalle-miniaturas {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.miniatura-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 10px;
+    object-fit: cover;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: 0.3s;
+}
+
+.miniatura-img:hover {
+    border-color: #d27f39;
+}
+
+.detalle-imagen-principal img {
+    width: 450px;
+    height: 450px;
+    border-radius: 15px;
+    object-fit: cover;
+}
+
+/* ------- INFORMACIÓN DERECHA ------- */
+
+.detalle-info {
+    max-width: 450px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.breadcrumb {
+    color: #666;
+    font-size: 14px;
+}
+
+.detalle-titulo {
+    font-size: 34px;
+    font-family: 'Playfair Display', serif;
+    margin: 5px 0;
+    color: #3b2f23;
+}
+
+.detalle-precio {
+    font-size: 26px;
+    color: #3b2f23;
+    margin-bottom: 15px;
+}
+
+.separador {
+    width: 100%;
+    height: 2px;
+    background: #ccc;
+    margin: 15px 0;
+}
+
+.subtitulo {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.detalle-opciones {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.opcion-btn {
+    padding: 12px;
+    border: 2px solid #bbb;
+    background: white;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 15px;
+    transition: 0.2s;
+}
+
+.opcion-btn:hover {
+    border-color: #d27f39;
+}
+
+.btn-carrito {
+    background: #d27f39;
+    color: white;
+    padding: 14px;
+    border: none;
+    width: 100%;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 20px 0;
+    transition: 0.3s;
+}
+
+.btn-carrito:hover {
+    opacity: 0.8;
+}
+
+.detalle-descripcion {
+    margin-top: 20px;
+    color: #444;
+    line-height: 1.6;
+}
+
+.detalle-nota {
+    margin-top: 10px;
+    color: #555;
+    font-size: 14px;
+}
+
+.btn-volver {
+    margin-top: 25px;
+    background-color: #3b2f23;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+/* CUADRO DE FONDO SÓLIDO DEL DETALLE */
+.detalle-fondo {
+    background: #ffffff;         /* Color sólido (puedes cambiarlo) */
+    width: 90%;
+    margin: 40px auto;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+}
+
+.desc-oculta {
+    display: none;
+}
+
+
+
+
+

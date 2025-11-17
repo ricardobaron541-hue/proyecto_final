@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página Inicio</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo de la empresa">
+        </div>
+
+        <nav class="nav">
+            <a href="/" class="nav-btn">INICIO</a>
+            <a href="/producto" class="nav-btn">PRODUCTO</a>
+            <a href="/nosotros" class="nav-btn">NOSOTROS</a>
+            <a href="/contacto" class="nav-btn">CONTACTO</a>
+        </nav>
+
+        <div class="icons">
+            <button class="icon cart" title="Carrito">🛒</button>
+            <button class="icon user" title="Usuario" onclick="window.location.href='/login'">👤</button>
+
+        </div>
+    </header>
+    
+    <main class="main">
+        <section class="empresa">
+            <div class="imagen-fondo"></div>
+        </section>
+    </main>
+
+    <footer class="footer">
+    <div class="footer-content">
+        <div class="footer-left">
+            <h2 class="footer-logo">Dulce Conexión</h2>
+            <p>Proyecto universitario desarrollado por <strong>Ricardo Baron</strong>.</p>
+            <p>Universidad UAN — T.E Contruccion De Software</p>
+            <p>Versión 1.0 | 2025</p>
+        </div>
+
+        <div class="footer-center">
+            <h3>Contacto</h3>
+            <p>📧 ricardo@universidad.edu.co</p>
+            <p>📱 321 423 9806</p>
+            <div class="footer-social">
+                <a href="#" class="social-icon">💻</a>
+                <a href="#" class="social-icon">📸</a>
+            </div>
+        </div>
+
+        <div class="footer-right">
+            <h3>Sobre el proyecto</h3>
+            <p>Aplicación web de repostería creada con <strong>Python (Flask)</strong>, HTML, CSS y enfoque en <strong>Programación Orientada a Objetos y Conexion a Bases De Datos</strong>.</p>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p>© 2025 — Proyecto académico | Desarrollado por Ricardo Baron</p>
+    </div>
+</footer>
+    
+</body>
+</html>

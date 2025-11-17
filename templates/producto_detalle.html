@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ titulo }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="detalle-fondo">
+    <div class="detalle-container">
+
+        <!-- ------- SOLO IMAGEN PRINCIPAL (SIN MINIATURAS) ------- -->
+        <div class="detalle-galeria">
+
+            <div class="detalle-imagen-principal">
+                <img id="imgPrincipal" src="{{ imagen }}" alt="">
+            </div>
+
+        </div>
+
+        <!-- ------- INFORMACIÓN DERECHA ------- -->
+        <div class="detalle-info">
+
+            <!-- ❌ Quitado: "Inicio / Productos / ..." -->
+            <!-- <p class="breadcrumb">Inicio / Productos / {{ titulo }}</p> -->
+
+            <h1 class="detalle-titulo">{{ titulo }}</h1>
+
+            <h2 class="detalle-precio">$ {{ precio }} </h2>
+
+            <div class="separador"></div>
+
+            <p class="detalle-descripcion">
+                {{ descripcion }}
+            </p>
+
+            <button class="btn-carrito">AGREGAR AL CARRITO</button>
+
+
+            <button onclick="window.history.back()" class="btn-volver">Volver</button>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
+
+
