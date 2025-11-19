@@ -37,7 +37,13 @@
                 {{ descripcion }}
             </p>
 
-            <button class="btn-carrito">AGREGAR AL CARRITO</button>
+            <form id="formAgregarCarrito" action="/agregar_carrito" method="POST">
+                <input type="hidden" name="titulo" value="{{ titulo }}">
+                <input type="hidden" name="precio" value="{{ precio }}">
+                <input type="hidden" name="imagen" value="{{ imagen }}">
+    
+                <button class="btn-carrito" type="submit">AGREGAR AL CARRITO</button>
+            </form>
 
 
             <button onclick="window.history.back()" class="btn-volver">Volver</button>
@@ -47,6 +53,37 @@
     </div>
 
 </div>
+
+<div id="mensajeAgregado">
+    Producto agregado con éxito ✔️
+</div>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const form = document.querySelector("#formAgregarCarrito");
+
+    form.addEventListener("submit", async function(e){
+        e.preventDefault();  // evita el reload
+        
+        const formData = new FormData(form);
+
+        let respuesta = await fetch("/agregar_carrito", {
+            method: "POST",
+            body: formData
+        });
+
+        if(await respuesta.text() === "OK"){
+            let msg = document.getElementById("mensajeAgregado");
+            msg.style.display = "block";
+
+            setTimeout(() => {
+                msg.style.display = "none";
+            }, 2000);
+        }
+    });
+});
+</script>
 
 </body>
 </html>

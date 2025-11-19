@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Carrito</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <header class="header">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo">
+        </div>
+
+        <nav class="nav">
+            <a href="/" class="nav-btn">INICIO</a>
+            <a href="/producto" class="nav-btn active">PRODUCTO</a>
+            <a href="/nosotros" class="nav-btn">NOSOTROS</a>
+            <a href="/contacto" class="nav-btn">CONTACTO</a>
+        </nav>
+    </header>
+
+<h1 class="titulo-carrito">Carrito de Compras</h1>
+
+<table class="tabla-carrito">
+    <thead>
+        <tr>
+            <th>Nombre Producto</th>
+            <th>Cantidad</th>
+            <th>Precio</th>
+            <th>Foto</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for p in carrito %}
+        <tr data-titulo="{{ p.titulo|e }}">
+            <td class="td-titulo">{{ p.titulo }}</td>
+
+            <td class="td-cantidad">
+                <!-- controles a la izquierda del número (como pediste) -->
+                <div class="cantidad-wrap" style="display:flex; align-items:center; gap:12px; justify-content:center;">
+                    <div class="cantidad-controles" style="display:flex; flex-direction:column; gap:6px;">
+                        <button class="btn-cantidad" data-accion="sumar" type="button" aria-label="incrementar">⬆</button>
+                        <button class="btn-cantidad" data-accion="restar" type="button" aria-label="disminuir">⬇</button>
+                    </div>
+
+                    <!-- número editable: lo mostramos en un span, y lo reemplazamos por input si el usuario quiere editar -->
+                    <span class="cantidad-num" data-cantidad="{{ p.cantidad }}">{{ p.cantidad }}</span>
+                </div>
+            </td>
+
+            <td class="td-precio">{{ p.precio }} $</td>
+            <td>
+                <img src="{{ p.imagen }}" class="img-carrito">
+            </td>
+            <td>
+                <a href="/eliminar_item/{{ p.titulo }}" class="btn-eliminar">🗑️</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% if carrito|length > 0 %}
+<button id="btn-siguiente" class="btn-siguiente">Siguiente</button>
+{% endif %}
+
+<div id="formulario-compra" style="display:none;" class="formulario-compra">
+    <h2>Datos del Comprador</h2>
+
+    <form>
+        <label>Nombre:</label>
+        <input type="text" required>
+
+        <label>Correo:</label>
+        <input type="email" required>
+
+        <label>Telefono:</label>
+        <input type="number" required>
+
+        <label>Total:</label>
+        <input id="input-total" type="number" readonly>
+
+        <button type="submit" class="btn-finalizar">Finalizar compra</button>
+    </form>
+</div>
+
+
+<script>
+// función para enviar la actualización por fetch y actualizar el DOM
+async function enviarActualizar(titulo, accion, row) {
+    try {
+        const body = new URLSearchParams();
+        body.append('titulo', titulo);
+        body.append('accion', accion);
+
+        const resp = await fetch('/actualizar_cantidad', {
+            method: 'POST',
+            body: body,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest' // marca como AJAX
+            }
+        });
+
+        if (!resp.ok) throw new Error('Respuesta no OK');
+
+        const data = await resp.json();
+
+        if (data.ok) {
+            // si el producto fue removido (cantidad 0 o eliminado), refrescamos la página
+            if (data.removed) {
+                // si quieres evitar reload, puedes eliminar la fila: row.remove();
+                window.location.reload();
+                return;
+            }
+
+            // actualizamos el número en la fila
+            const span = row.querySelector('.cantidad-num');
+            if (span) {
+                span.textContent = data.cantidad;
+                span.dataset.cantidad = data.cantidad;
+            }
+        } else {
+            console.warn('No se actualizó:', data);
+        }
+    } catch (err) {
+        console.error('Error actualizar cantidad:', err);
+    }
+}
+
+// manejador de clicks para los botones de flecha
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.btn-cantidad').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault(); // evita cualquier comportamiento por defecto
+            const accion = this.dataset.accion; // "sumar" o "restar"
+            const row = this.closest('tr');
+            const titulo = row?.dataset?.titulo;
+            if (!titulo) return;
+
+            enviarActualizar(titulo, accion, row);
+        });
+    });
+
+    // permitir editar haciendo click sobre el número (opcional UX)
+    document.querySelectorAll('.cantidad-num').forEach(span => {
+        span.addEventListener('click', function() {
+            // reemplaza por input para edición directa
+            const current = parseInt(this.dataset.cantidad || this.textContent || '1', 10);
+            const input = document.createElement('input');
+            input.type = 'number';
+            input.min = 1;
+            input.value = current;
+            input.style.width = '60px';
+            input.className = 'input-cantidad-directa';
+
+            const spanParent = this.parentElement;
+            this.style.display = 'none';
+            spanParent.appendChild(input);
+            input.focus();
+
+            input.addEventListener('blur', async () => {
+                const newVal = parseInt(input.value || '0', 10);
+                input.remove();
+                this.style.display = '';
+
+                if (isNaN(newVal) || newVal <= 0) {
+                    // si es 0 o inválido, hacemos petición para eliminar
+                    const row = this.closest('tr');
+                    const titulo = row.dataset.titulo;
+                    await enviarActualizar(titulo, 'restar'); // restar una vez y backend eliminará si <=0
+                    // forzar recarga para reflejar eliminación
+                    window.location.reload();
+                    return;
+                }
+
+                // Si la nueva cantidad es distinta, calculamos la diferencia y enviamos acciones en bucle (simple)
+                const diff = newVal - current;
+                if (diff === 0) return;
+
+                const row = this.closest('tr');
+                const titulo = row.dataset.titulo;
+
+                // si diff > 0 -> enviar "sumar" diff veces; si diff < 0 -> "restar" |diff|
+                const accion = diff > 0 ? 'sumar' : 'restar';
+                const veces = Math.abs(diff);
+
+                // enviar secuencialmente (pequeña cantidad típica en carrito)
+                for (let i = 0; i < veces; i++) {
+                    await enviarActualizar(titulo, accion, row);
+                }
+            });
+
+            // también permitir Enter para confirmar
+            input.addEventListener('keydown', (ev) => {
+                if (ev.key === 'Enter') {
+                    ev.preventDefault();
+                    input.blur();
+                }
+            });
+        });
+    });
+});
+</script>
+
+<script>
+// Botón siguiente
+document.getElementById("btn-siguiente")?.addEventListener("click", function() {
+    
+    document.getElementById("btn-siguiente").style.display = "none";
+
+    // Oculta tabla
+    document.querySelector(".tabla-carrito").style.display = "none";
+    document.querySelector(".titulo-carrito").style.display = "none";
+    
+    // Muestra formulario
+    document.getElementById("formulario-compra").style.display = "block";
+
+    // Calcular total
+    let total = 0;
+    document.querySelectorAll("tbody tr").forEach(fila => {
+        let cantidad = parseInt(fila.querySelector(".cantidad-num").innerText);
+        let precio_texto = fila.children[2].innerText.replace("$","").trim();
+        let precio = parseFloat(precio_texto);
+        total += cantidad * precio;
+    });
+
+    // Mostrar total (solo número)
+    document.getElementById("input-total").value = total;
+});
+</script>
+
+<script>
+document.querySelector(".formulario-compra form")?.addEventListener("submit", function(e){
+    e.preventDefault();  // Evita que recargue la página
+
+    // Crear alerta flotante
+    const alerta = document.createElement("div");
+    alerta.className = "alerta-compra";
+    alerta.innerHTML = `
+        <div class="alerta-contenido">
+            <h2>¡Gracias por tu compra! </h2>
+            <p>Tu pedido ha sido registrado exitosamente.</p>
+        </div>
+    `;
+
+    document.body.appendChild(alerta);
+
+    // Desaparece y redirige después de 2.2s
+    setTimeout(async () => {
+        // Vacía carrito antes de redirigir
+        await fetch("/vaciar_carrito", { method: "POST" });
+
+        window.location.href = "/producto";
+    }, 2500);
+
+});
+</script>
+
+
+</body>
+</html>
+
