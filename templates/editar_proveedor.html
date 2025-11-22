@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Proveedor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="contenedor-formulario-proveedor">
+    <div class="formulario-proveedor">
+
+        <h2>Editar Proveedor</h2>
+
+        <form action="" method="POST">
+
+            <input type="text" name="nombre" value="{{ proveedor.Nombre }}" placeholder="Nombre" required>
+
+            <input type="text" name="telefono" value="{{ proveedor.Telefono }}" placeholder="Teléfono" required>
+
+            <input type="email" name="correo" value="{{ proveedor.Correo }}" placeholder="Correo" required>
+
+            <input type="text" name="direccion" value="{{ proveedor.Direccion }}" placeholder="Dirección" required>
+
+            <input type="text" name="tipo" value="{{ proveedor.Tipo_Producto }}" placeholder="Tipo de producto" required>
+
+            <button class="boton-guardar" type="submit">Guardar Cambios</button>
+
+        </form>
+
+        <div class="cancel-container">
+            <button class="btn-menu" onclick="window.location.href='/proveedor'">
+                Cancelar
+            </button>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

@@ -1195,6 +1195,137 @@ body {
     background-color: #d27f39;
 }
 
+.tabla-proveedor {
+    width: 90%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.tabla-proveedor th, .tabla-proveedor td {
+    padding: 12px;
+    border-bottom: 1px solid #ccc;
+    text-align: center;
+}
+
+.tabla-proveedor th {
+    background-color: #3b2f23;
+    color: white;
+}
+
+.btn-agregar, .btn-editar, .btn-eliminar {
+    padding: 8px 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-agregar { background: #3b2f23; }
+.btn-editar { background: #d27f39; }
+.btn-eliminar { background: red; }
+
+.form-proveedor {
+    width: 90%;
+    margin: 20px auto;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.form-proveedor input {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #777;
+}
+
+/* ===== FORMULARIOS DE AGREGAR / EDITAR PROVEEDOR ===== */
+
+.formulario-proveedor {
+    width: 500px;
+    margin: 60px auto;
+    padding: 40px 45px;
+    background: rgba(255, 255, 255, 0.55);
+    border-radius: 20px;
+    backdrop-filter: blur(6px);
+    box-shadow: 0px 6px 18px rgba(0,0,0,0.20);
+    font-family: 'Poppins', sans-serif;
+    animation: formAparecer .5s ease;
+}
+
+.formulario-proveedor h2 {
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 30px;
+    color: #3b2f23;
+    margin-bottom: 25px;
+    text-shadow: 1px 1px 2px rgba(255,255,255,0.7);
+}
+
+/* Inputs */
+.formulario-proveedor input[type="text"],
+.formulario-proveedor input[type="email"],
+.formulario-proveedor input[type="number"],
+.formulario-proveedor input[type="tel"] {
+    width: 100%;
+    padding: 15px 18px;
+    border-radius: 14px;
+    border: none;
+    background-color: #5c5c5c;
+    color: #fff;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.formulario-proveedor input::placeholder {
+    color: #ddd;
+}
+
+/* Botón guardar */
+.boton-guardar {
+    width: 100%;
+    margin-top: 25px;
+    background-color: #3b2f23;
+    color: white;
+    padding: 14px 18px;
+    border-radius: 14px;
+    font-size: 17px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.boton-guardar:hover {
+    background-color: #d27f39;
+    transform: scale(1.03);
+}
+
+/* Caja central del formulario */
+.contenedor-formulario-proveedor {
+    width: 90%;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+}
+
+/* Animación */
+@keyframes formAparecer {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+.cancel-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.btn-guardar {
+    margin-bottom: 15px; /* espacio entre Guardar y Cancelar */
+}
+
 
 
 

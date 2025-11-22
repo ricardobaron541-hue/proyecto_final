@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Agregar Proveedor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="contenedor-formulario-proveedor">
+    <div class="formulario-proveedor">
+
+        <h2>Agregar Proveedor</h2>
+
+        <form action="/proveedor/agregar" method="POST">
+            <input type="text" name="nombre" placeholder="Nombre del proveedor" required>
+
+            <input type="text" name="telefono" placeholder="Teléfono" required>
+
+            <input type="email" name="correo" placeholder="Correo" required>
+
+            <input type="text" name="direccion" placeholder="Dirección" required>
+
+            <input type="text" name="tipo" placeholder="Tipo de productos que provee" required>
+
+            <button class="boton-guardar" type="submit">Guardar</button>
+        </form>
+
+        <div class="cancel-container">
+            <button class="btn-menu" onclick="window.location.href='/proveedor'">
+                Cancelar
+            </button>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

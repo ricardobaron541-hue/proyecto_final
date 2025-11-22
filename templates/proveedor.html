@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Gestión de Proveedores</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+  <body>
+    <h2 style="text-align: center; margin-top: 30px; color: #3b2f23">
+      Gestión de Proveedores
+    </h2>
+
+    <div style="text-align: center; margin-bottom: 20px">
+      <button
+        class="btn-agregar"
+        onclick="window.location.href='/proveedor/agregar'"
+      >
+        Agregar Proveedor
+      </button>
+    </div>
+
+    <table class="tabla-carrito" style="width: 90%; margin: auto">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Proveedor</th>
+          <th>Teléfono</th>
+          <th>Correo</th>
+          <th>Dirección</th>
+          <th>Tipo Producto</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% if proveedores|length == 0 %}
+        <tr>
+          <td colspan="7" style="text-align: center; padding: 20px">
+            No hay proveedores registrados.
+          </td>
+        </tr>
+        {% else %} {% for p in proveedores %}
+        <tr>
+          <td>{{ p.Id_Proveedor }}</td>
+          <td>{{ p.Nombre }}</td>
+          <td>{{ p.Telefono }}</td>
+          <td>{{ p.Correo }}</td>
+          <td>{{ p.Direccion }}</td>
+          <td>{{ p.Tipo_Producto }}</td>
+
+          <td>
+            <!-- EDITAR -->
+            <button class="btn-editar"
+                    onclick="window.location.href='/proveedor/editar/{{ p.Id_Proveedor }}'">
+                Editar
+            </button>
+
+
+            <!-- ELIMINAR -->
+            <button
+              class="btn-eliminar"
+              onclick="eliminarProveedor('{{ p.Id_Proveedor}}')"
+            >
+              Eliminar
+            </button>
+          </td>
+        </tr>
+        {% endfor %} {% endif %}
+      </tbody>
+    </table>
+
+    <div style="text-align: center; margin: 30px 0">
+      <button class="btn-menu" onclick="window.location.href='/bienvenido'">
+        Volver
+      </button>
+    </div>
+
+    <script>
+      function eliminarProveedor(id) {
+        if (confirm("¿Seguro de eliminar este proveedor?")) {
+          window.location.href = "/proveedor/eliminar/" + id;
+        }
+      }
+
+      function editarProveedor(id, nombre, telefono, correo, direccion, tipo) {
+        // Construye un formulario oculto para enviar POST
+        const form = document.createElement("form");
+        form.method = "POST";
+        form.action = "/proveedor/editar/" + id;
+
+        form.innerHTML = `
+        <input type="hidden" name="nombre" value="${nombre}">
+        <input type="hidden" name="telefono" value="${telefono}">
+        <input type="hidden" name="correo" value="${correo}">
+        <input type="hidden" name="direccion" value="${direccion}">
+        <input type="hidden" name="tipo" value="${tipo}">
+    `;
+
+        document.body.appendChild(form);
+        form.submit();
+      }
+    </script>
+  </body>
+</html>

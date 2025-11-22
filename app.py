@@ -249,7 +249,73 @@ class PaginaWeb:
             self.cursor.execute(query, (id,))
             self.db.commit()
             return redirect("/gestion_productos")
+        
+                # --------------------------
+        # 🔹 Gestión de Proveedores
+        # --------------------------
+        @self.app.route("/proveedor")
+        def proveedor():
+            self.cursor.execute("SELECT * FROM proveedor")
+            proveedores = self.cursor.fetchall()
+            return render_template("proveedor.html", proveedores=proveedores)
 
+        @self.app.route("/proveedor/agregar", methods=["GET","POST"])
+        def proveedor_agregar():
+            if request.method == "GET":
+                 return render_template("agregar_proveedor.html")
+            nombre = request.form["nombre"]
+            telefono = request.form["telefono"]
+            correo = request.form["correo"]
+            direccion = request.form["direccion"]
+            tipo = request.form["tipo"]
+
+            query = """
+                INSERT INTO proveedor (Nombre, Telefono, Correo, Direccion, Tipo_Producto, Usuario_D_Creacion, Fecha_Hora_Creacion)
+                VALUES (%s, %s, %s, %s, %s, %s, NOW())
+            """
+            usuario = session.get("usuario", "admin")
+
+            self.cursor.execute(query, (nombre, telefono, correo, direccion, tipo, usuario))
+            self.db.commit()
+
+            return redirect("/proveedor")
+        
+        @self.app.route("/proveedor/editar/<int:id>", methods=["GET", "POST"])
+        def proveedor_editar(id):
+
+            # GET → mostrar formulario con datos existentes
+            if request.method == "GET":
+                self.cursor.execute("SELECT * FROM proveedor WHERE Id_Proveedor=%s", (id,))
+                proveedor = self.cursor.fetchone()
+                return render_template("editar_proveedor.html", proveedor=proveedor)
+
+            # POST → actualizar datos
+            nombre = request.form["nombre"]
+            telefono = request.form["telefono"]
+            correo = request.form["correo"]
+            direccion = request.form["direccion"]
+            tipo = request.form["tipo"]
+
+            query = """
+                UPDATE proveedor SET 
+                    Nombre=%s, 
+                    Telefono=%s, 
+                    Correo=%s, 
+                    Direccion=%s, 
+                    Tipo_Producto=%s
+                WHERE Id_Proveedor=%s
+            """
+
+            self.cursor.execute(query, (nombre, telefono, correo, direccion, tipo, id))
+            self.db.commit()
+
+            return redirect("/proveedor")
+
+        @self.app.route("/proveedor/eliminar/<int:id>")
+        def proveedor_eliminar(id):
+            self.cursor.execute("DELETE FROM proveedor WHERE Id_Proveedor=%s", (id,))
+            self.db.commit()
+            return redirect("/proveedor")
 
     def ejecutar(self):
         self.app.run(debug=True)
