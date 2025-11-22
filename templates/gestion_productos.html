@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Productos</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<h2 style="text-align:center; margin-top:30px; color:#3b2f23;">Gestión de Productos</h2>
+
+<div style="text-align:center; margin-bottom:20px;">
+    <button class="btn-agregar" onclick="window.location.href='/producto/agregar'">
+        Agregar Producto
+    </button>
+</div>
+
+<table class="tabla-carrito" style="width:90%; margin:auto;">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Producto</th>
+            <th>Descripción</th>
+            <th>Imagen</th>
+            <th>Precio</th>
+            <th>Stock</th>
+            <th>Fecha Vencimiento</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% if productos|length == 0 %}
+        <tr>
+            <td colspan="8" style="text-align:center; padding:20px;">
+                No hay productos registrados.
+            </td>
+        </tr>
+        {% else %}
+            {% for p in productos %}
+            <tr>
+                <td>{{ p.Id_Producto }}</td>
+                <td>{{ p.Nombre_Producto }}</td>
+                <td>{{ p.Descripcion }}</td>
+                <td><img src="{{ p.Imagen }}" width="70"></td>
+                <td>${{ p.Precio }}</td>
+                <td>{{ p.Stock }}</td>
+                <td>{{ p.Fecha_Vencimiento }}</td>
+                <td>
+                    <button class="btn-editar" onclick="window.location.href='/producto/editar/{{ p.Id_Producto }}'">Editar</button>
+                    <button class="btn-eliminar" onclick="eliminarProducto('{{ p.Id_Producto }}')">Eliminar</button>
+                </td>
+            </tr>
+            {% endfor %}
+        {% endif %}
+    </tbody>
+
+    
+
+</table>
+
+<div style="text-align:center; margin:30px 0;">
+    <button class="btn-menu" onclick="window.location.href='/bienvenido'">Guardar</button>
+</div>
+
+
+<script>
+function editarProducto(id) {
+    window.location.href = "/producto/editar/" + id;
+}
+
+function eliminarProducto(id) {
+    if (confirm("¿Estás seguro de eliminar este producto?")) {
+        window.location.href = "/producto/eliminar/" + id;
+    }
+}
+
+function abrirAgregar() {
+    window.location.href = "/producto/agregar";
+}
+</script>
+
+</body>
+</html>

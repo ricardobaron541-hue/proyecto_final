@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Producto</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<h2 class="titulo-form">Agregar Producto</h2>
+
+<div class="form-contenedor">
+    <form action="/producto/agregar" method="POST" class="form-producto">
+
+        <label>Nombre del Producto:</label>
+        <input type="text" name="nombre" required>
+
+        <label>Descripción:</label>
+        <textarea name="descripcion" required></textarea>
+
+        <label>URL de Imagen:</label>
+        <input type="text" name="imagen">
+
+        <label>Precio:</label>
+        <input type="number" name="precio" required>
+
+        <label>Stock:</label>
+        <input type="number" name="stock" required>
+
+        <label>Fecha de Vencimiento:</label>
+        <input type="date" name="fecha" required>
+
+        <button type="submit" class="btn-guardar">Guardar Producto</button>
+        <a href="/gestion_productos" class="btn-cancelar">Cancelar</a>
+
+    </form>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página Inicio</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo de la empresa">
+        </div>
+
+        <nav class="nav">
+            <a href="/" class="nav-btn">INICIO</a>
+            <a href="/gestion_productos" class="nav-btn">Agregar - Editar producto</a>
+            <a href="#" class="nav-btn">VENTAS</a>
+            <a href="#" class="nav-btn">PROVEEDOR</a>
+        </nav>
+
+    </header>
+    
+    <main class="main">
+        <section class="empresa">
+            <div class="imagen-fondo"></div>
+        </section>
+    </main>
+    
+</body>
+</html>

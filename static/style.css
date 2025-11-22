@@ -983,6 +983,222 @@ body {
     to { opacity: 1; transform: translateY(0); }
 }
 
+/* Fondo oscuro del modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+}
+
+/* Caja del modal */
+.modal-contenido {
+    background: #fff;
+    margin: 12% auto;
+    padding: 25px;
+    width: 300px;
+    border-radius: 10px;
+    text-align: center;
+    animation: aparecer 0.3s ease;
+}
+
+@keyframes aparecer {
+    from { transform: scale(0.7); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+/* Botón cerrar */
+.cerrar {
+    float: right;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* Botones del modal */
+.opciones a {
+    display: block;
+    margin: 12px 0;
+    padding: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 6px;
+}
+
+.btn-agregar {
+    background: #4CAF50;
+    color: #fff;
+}
+
+.btn-editar {
+    background: #2196F3;
+    color: #fff;
+}
+
+/* ===== PAGINA EDITAR PRODUCTO ===== */
+
+.titulo-editar {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 32px;
+    font-family: 'Playfair Display', serif;
+    color: #3b2f23;
+}
+
+.contenedor-tabla {
+    width: 90%;
+    margin: 30px auto;
+    background-color: rgba(255,255,255,0.9);
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.tabla-editar {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+.tabla-editar th {
+    background-color: #d27f39;
+    color: white;
+    padding: 12px;
+    font-size: 18px;
+}
+
+.tabla-editar td {
+    padding: 12px;
+    border-bottom: 1px solid #ccc;
+    font-size: 16px;
+}
+
+.btn-accion {
+    padding: 8px 15px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    background-color: #3b2f23;
+    color: white;
+}
+
+.btn-eliminar {
+    background-color: #b83227;
+}
+
+.btn-agregar {
+    background: #3b2f23;
+    color: white;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.btn-editar {
+    background: #d27f39;
+    color: white;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.btn-eliminar {
+    background: red;
+    color: white;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.titulo-form {
+    text-align: center;
+    margin-top: 20px;
+    font-family: 'Playfair Display', serif;
+    font-size: 34px;
+    color: #3b2f23;
+}
+
+.form-contenedor {
+    width: 90%;
+    max-width: 700px;
+    margin: 30px auto;
+    background: rgba(255, 255, 255, 0.85);
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    backdrop-filter: blur(3px);
+}
+
+.form-producto {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.form-producto input,
+.form-producto textarea {
+    padding: 14px 16px;
+    border-radius: 12px;
+    border: 1px solid #c7b8a5;
+    background: #f4f1ee;
+    font-size: 16px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.btn-guardar {
+    background-color: #3b2f23;
+    color: white;
+    padding: 12px 25px;
+    border-radius: 20px;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-guardar:hover {
+    background-color: #d27f39;
+}
+
+.btn-cancelar {
+    text-align: center;
+    background-color: #b5b5b5;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.btn-cancelar:hover {
+    background-color: #888;
+}
+.btn-menu {
+    background-color: #3b2f23;
+    color: white;
+    padding: 12px 25px;
+    border-radius: 20px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-menu:hover {
+    background-color: #d27f39;
+}
+
+
+
+
+
 
 
 

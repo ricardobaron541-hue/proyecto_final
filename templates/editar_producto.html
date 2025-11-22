@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Producto</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<h2 class="titulo-form">Editar Producto</h2>
+
+<div class="form-contenedor">
+    <form action="/producto/editar/{{ producto.Id_Producto }}" method="POST" class="form-producto">
+
+        <label>Nombre del Producto:</label>
+        <input type="text" name="nombre" value="{{ producto.Nombre_Producto }}" required>
+
+        <label>Descripción:</label>
+        <textarea name="descripcion" required>{{ producto.Descripcion }}</textarea>
+
+        <label>URL de Imagen:</label>
+        <input type="text" name="imagen" value="{{ producto.Imagen }}">
+
+        <label>Precio:</label>
+        <input type="number" name="precio" value="{{ producto.Precio }}" required>
+
+        <label>Stock:</label>
+        <input type="number" name="stock" value="{{ producto.Stock }}" required>
+
+        <label>Fecha de Vencimiento:</label>
+        <input type="date" name="fecha" value="{{ producto.Fecha_Vencimiento }}" required>
+
+        <button type="submit" class="btn-guardar">Guardar Cambios</button>
+        <a href="/gestion_productos" class="btn-cancelar">Cancelar</a>
+
+    </form>
+</div>
+
+</body>
+</html>

@@ -35,62 +35,26 @@
 
         <section class="contenedor-cards">
 
-            <div class="card-producto" data-precio="12.000">
-                 <div class="card-imagen" 
-                    style="background-image: url(../static/producto_1.png);">
+            {% for p in productos %}
+            <div class="card-producto" 
+                data-precio="{{ p.Precio }}"
+            >
+                <div class="card-imagen"
+                    style="background-image: url('{{ p.Imagen }}');">
                 </div>
-                <div class="card-info">
-                    <h3>Tiramisu</h3>
-                    <p class="desc-oculta">
-                        Postre tradicional italiano con capas de bizcocho humedecido en café, 
-                        crema suave de mascarpone y cacao espolvoreado. 
-                        Sabor intenso y textura cremosa.
-                    </p>
-                </div>
-            </div>
 
-            <div class="card-producto" data-precio="18.000">
-                <div class="card-imagen" 
-                    style="background-image: url(../static/producto_2.png);">
-                </div>
                 <div class="card-info">
-                    <h3>Rollito de Frutos Rojos</h3>
-                    <p class="desc-oculta">
-                        Bizcochuelo suave relleno de crema ligera y mermelada artesanal de frutos rojos. 
-                        Dulce, fresco y perfecto para cualquier ocasión.
-                    </p>
-                </div>
-            </div>
+                    <h3>{{ p.Nombre_Producto }}</h3>
 
-            <div class="card-producto" data-precio="17.000">
-                <div class="card-imagen" 
-                    style="background-image: url(../static/producto_3.png);">
-                </div>
-                <div class="card-info">
-                    <h3>Flan Caramelo Gourmet</h3>
                     <p class="desc-oculta">
-                        Flan artesanal de textura suave y brillante, 
-                        cubierto con caramelo dorado. 
-                        Un clásico irresistible, hecho con receta casera.
+                        {{ p.Descripcion }}
                     </p>
                 </div>
             </div>
-
-            <div class="card-producto" data-precio="16.000"> 
-                <div class="card-imagen" 
-                    style="background-image: url(../static/producto_4.png);">
-                </div>
-                <div class="card-info">
-                    <h3>Cheesecake de Maracuyá</h3>
-                    <p class="desc-oculta">
-                        Base de galleta crocante, 
-                        crema de queso dulce y toque cítrico de maracuyá. 
-                        Decorado con frutos rojos frescos.
-                    </p>
-                </div>
-            </div>
+            {% endfor %}
 
         </section>
+
 
     </main>
 

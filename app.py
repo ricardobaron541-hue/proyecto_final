@@ -1,12 +1,62 @@
 from flask import Flask, render_template, request, session, redirect, url_for, jsonify
+import mysql.connector
 
 class PaginaWeb:
     def __init__(self, nombre):
         self.app = Flask(nombre)
         self.app.secret_key = "superclave"
+
+        # 🔹 CONEXIÓN A MYSQL (AGREGADO)
+        self.db = mysql.connector.connect(
+            host="localhost",
+            user="root",
+            password="",  # si tu MySQL tiene contraseña, agrégala aquí
+            database="postres"
+        )
+        self.cursor = self.db.cursor(dictionary=True)
+
         self.configurar_rutas()
 
     def configurar_rutas(self):
+
+        # --------------------------
+        # 🔹 LOGIN POST (AGREGADO)
+        # --------------------------
+        @self.app.route("/login", methods=["POST"])
+        def login_post():
+            usuario = request.form.get("usuario")
+
+            try:
+                usuario = int(usuario)  # convierte la cadena a número
+            except:
+                 return render_template("login.html", error="Usuario inválido")
+
+            password = request.form.get("password")
+
+            query = """
+                SELECT * FROM usuario 
+                WHERE Id_Usuario=%s AND Contraseña=%s 
+            """
+            self.cursor.execute(query, (usuario, password))
+            datos = self.cursor.fetchone()
+
+            if datos:
+                session["usuario"] = datos["Nombre"]
+                return redirect(url_for("bienvenido"))
+            else:
+                return render_template("login.html", error="Usuario o contraseña incorrectos")
+
+        # --------------------------
+        # 🔹 Página de Bienvenida
+        # --------------------------
+        @self.app.route("/bienvenido")
+        def bienvenido():
+            nombre = session.get("usuario", "Usuario")
+            return render_template("bienvenido.html", nombre=nombre)
+
+        # --------------------------
+        # 🔹 AQUI EMPIEZA TU CÓDIGO ORIGINAL
+        # --------------------------
 
         @self.app.route("/agregar_carrito", methods=["POST"])
         def agregar_carrito():
@@ -63,7 +113,6 @@ class PaginaWeb:
                     elif accion == "restar":
                         item["cantidad"] = int(item.get("cantidad", 0)) - 1
 
-                    # eliminar si 0 o menos
                     if item["cantidad"] <= 0:
                         carrito = [i for i in carrito if i["titulo"] != titulo]
                         removed = True
@@ -75,11 +124,9 @@ class PaginaWeb:
             session["carrito"] = carrito
             session.modified = True
 
-            # si la petición viene por fetch/ajax devolvemos json para actualizar en el DOM
             if request.headers.get('X-Requested-With') == 'XMLHttpRequest' or request.is_json:
                 return jsonify({"ok": True, "cantidad": nueva_cantidad or 0, "removed": removed})
 
-            # compatibilidad: redirigir si no es ajax
             return redirect(url_for("carrito"))
 
         @self.app.route("/")
@@ -107,7 +154,10 @@ class PaginaWeb:
 
         @self.app.route('/producto')
         def producto():
-            return render_template('producto.html')
+            query = "SELECT * FROM producto"
+            self.cursor.execute(query)
+            productos = self.cursor.fetchall()
+            return render_template("producto.html", productos=productos)
 
         @self.app.route('/producto_detalle')
         def producto_detalle():
@@ -126,13 +176,84 @@ class PaginaWeb:
             session["carrito"] = []
             session.modified = True
             return jsonify({"ok": True})
+        
+        @self.app.route("/gestion_productos")
+        def gestion_productos():
+            query = "SELECT * FROM producto"
+            self.cursor.execute(query)
+            productos = self.cursor.fetchall()
+            return render_template("gestion_productos.html", productos=productos)
+
+        @self.app.route("/producto/agregar", methods=["GET","POST"])
+        def agregar_producto():
+            if request.method == "GET":
+                 return render_template("agregar_producto.html")
+            
+            nombre = request.form["nombre"]
+            descripcion = request.form["descripcion"]
+            imagen = request.form["imagen"]
+            precio = request.form["precio"]
+            stock = request.form["stock"]
+            fecha = request.form["fecha"]
+
+            query = """
+                INSERT INTO producto 
+                (Nombre_Producto, Descripcion, Imagen, Precio, Stock, Fecha_Vencimiento, Usuario_D_Creacion, Fecha_Hora_Creacion)
+                VALUES (%s, %s, %s, %s, %s, %s, 'admin', NOW())
+            """
+
+            valores = (nombre, descripcion, imagen, precio, stock, fecha)
+
+            self.cursor.execute(query, valores)
+            self.db.commit()
+
+            return redirect("/gestion_productos")
+        
+        @self.app.route("/producto/editar/<int:id>", methods=["GET", "POST"])
+        def editar_producto(id):
+
+            if request.method == "GET":
+                self.cursor.execute("SELECT * FROM producto WHERE Id_Producto=%s", (id,))
+                producto = self.cursor.fetchone()
+                return render_template("editar_producto.html", producto=producto)
+
+            # Si es POST → guardar cambios
+            nombre = request.form["nombre"]
+            descripcion = request.form["descripcion"]
+            imagen = request.form["imagen"]
+            precio = request.form["precio"]
+            stock = request.form["stock"]
+            fecha = request.form["fecha"]
+
+            query = """
+                UPDATE producto SET 
+                    Nombre_Producto=%s,
+                    Descripcion=%s,
+                    Imagen=%s,
+                    Precio=%s,
+                    Stock=%s,
+                    Fecha_Vencimiento=%s
+                WHERE Id_Producto=%s
+            """
+
+            valores = (nombre, descripcion, imagen, precio, stock, fecha, id)
+
+            self.cursor.execute(query, valores)
+            self.db.commit()
+
+            return redirect("/gestion_productos")
+        
+        @self.app.route("/producto/eliminar/<int:id>")
+        def eliminar_producto(id):
+            query = "DELETE FROM producto WHERE Id_Producto=%s"
+            self.cursor.execute(query, (id,))
+            self.db.commit()
+            return redirect("/gestion_productos")
 
 
     def ejecutar(self):
         self.app.run(debug=True)
 
-
 if __name__ == '__main__':
     web = PaginaWeb(__name__)
     web.ejecutar()
-

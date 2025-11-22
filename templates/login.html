@@ -16,11 +16,15 @@
 			</div>
 
 			<div class="login">
-				<form>
+				<form method="POST" action="/login">
 					<label for="chk" aria-hidden="true">Login</label>
-					<input type="num" name="email" placeholder="Usuario" required="">
-					<input type="password" name="pswd" placeholder="Contraseña" required="">
+					<input type="text" name="usuario" placeholder="Usuario" required="">
+					<input type="password" name="password" placeholder="Contraseña" required="">
 					<button>Ingresar</button>
+
+					{% if error %}
+						<p style="color:red; margin-top:10px;">{{ error }}</p>
+					{% endif %}
 				</form>
 			</div>
 	</div>
