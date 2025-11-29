@@ -1,23 +1,45 @@
 <!DOCTYPE html>
+<!-- Indica que el documento usa HTML5 -->
+
 <html lang="es">
+<!-- Define que el idioma principal del documento es español -->
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestión de Productos</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
+    <!-- Define codificación UTF-8 para soportar caracteres especiales -->
 
-<h2 style="text-align:center; margin-top:30px; color:#3b2f23;">Gestión de Productos</h2>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Permite que la página sea responsive en móviles -->
+
+    <title>Gestión de Productos</title>
+    <!-- Título que aparece en la pestaña del navegador -->
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- Carga el archivo CSS desde la carpeta static -->
+</head>
+
+<body>
+<!-- Inicio del cuerpo de la página -->
+
+<h2 style="text-align:center; margin-top:30px; color:#3b2f23;">
+    <!-- Título principal centrado -->
+    Gestión de Productos
+</h2>
 
 <div style="text-align:center; margin-bottom:20px;">
+    <!-- Contenedor centrado para el botón agregar -->
+
     <button class="btn-agregar" onclick="window.location.href='/producto/agregar'">
+        <!-- Botón para ir al formulario de agregar producto -->
         Agregar Producto
     </button>
 </div>
 
 <table class="tabla-carrito" style="width:90%; margin:auto;">
+    <!-- Tabla principal que muestra todos los productos -->
+    
     <thead>
+        <!-- Encabezados de la tabla -->
         <tr>
             <th>ID</th>
             <th>Producto</th>
@@ -31,51 +53,100 @@
     </thead>
 
     <tbody>
+        <!-- Cuerpo de la tabla donde se listan los productos -->
+
         {% if productos|length == 0 %}
+        <!-- Si no hay productos registrados, mostrar mensaje -->
+
         <tr>
             <td colspan="8" style="text-align:center; padding:20px;">
+                <!-- La celda ocupa 8 columnas para mostrar el mensaje -->
                 No hay productos registrados.
             </td>
         </tr>
+
         {% else %}
+        <!-- Si sí hay productos, se recorre la lista -->
+
             {% for p in productos %}
+            <!-- Bucle que recorre cada producto recibido desde Flask -->
+
             <tr>
+                <!-- Fila para cada producto -->
                 <td>{{ p.Id_Producto }}</td>
+                <!-- Muestra el ID del producto -->
+
                 <td>{{ p.Nombre_Producto }}</td>
+                <!-- Muestra el nombre del producto -->
+
                 <td>{{ p.Descripcion }}</td>
+                <!-- Muestra la descripción -->
+
                 <td><img src="{{ p.Imagen }}" width="70"></td>
+                <!-- Muestra la imagen usando la URL guardada -->
+
                 <td>${{ p.Precio }}</td>
+                <!-- Muestra el precio -->
+
                 <td>{{ p.Stock }}</td>
+                <!-- Muestra la cantidad en inventario -->
+
                 <td>{{ p.Fecha_Vencimiento }}</td>
+                <!-- Fecha de vencimiento del producto -->
+
                 <td>
-                    <button class="btn-editar" onclick="window.location.href='/producto/editar/{{ p.Id_Producto }}'">Editar</button>
-                    <button class="btn-eliminar" onclick="eliminarProducto('{{ p.Id_Producto }}')">Eliminar</button>
+                    <!-- Contenedor de botones de acción -->
+
+                    <button class="btn-editar" onclick="window.location.href='/producto/editar/{{ p.Id_Producto }}'">
+                        <!-- Botón para editar el producto -->
+                        Editar
+                    </button>
+
+                    <button class="btn-eliminar" onclick="eliminarProducto('{{ p.Id_Producto }}')">
+                        <!-- Botón para eliminar el producto (llama función JS) -->
+                        Eliminar
+                    </button>
                 </td>
             </tr>
-            {% endfor %}
-        {% endif %}
-    </tbody>
 
-    
+            {% endfor %}
+            <!-- Fin del bucle de productos -->
+
+        {% endif %}
+        <!-- Fin del condicional de si hay o no productos -->
+    </tbody>
 
 </table>
 
 <div style="text-align:center; margin:30px 0;">
-    <button class="btn-menu" onclick="window.location.href='/bienvenido'">Volver</button>
+    <!-- Contenedor para el botón de volver -->
+
+    <button class="btn-menu" onclick="window.location.href='/bienvenido'">
+        <!-- Botón para regresar al menú principal -->
+        Volver
+    </button>
 </div>
 
-
 <script>
+/* --------------------------------------------------
+   Función para redirigir a la edición del producto
+-------------------------------------------------- */
 function editarProducto(id) {
     window.location.href = "/producto/editar/" + id;
 }
 
+/* --------------------------------------------------
+   Función para eliminar producto con confirmación
+-------------------------------------------------- */
 function eliminarProducto(id) {
     if (confirm("¿Estás seguro de eliminar este producto?")) {
         window.location.href = "/producto/eliminar/" + id;
     }
 }
 
+/* --------------------------------------------------
+   Función que redirige a agregar producto
+-------------------------------------------------- */
 function abrirAgregar() {
     window.location.href = "/producto/agregar";
 }

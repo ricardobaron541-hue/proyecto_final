@@ -1,0 +1,48 @@
+<!DOCTYPE html> <!-- Indica que el documento está escrito en HTML5 -->
+<html lang="es"> <!-- Establece que el idioma del contenido es español -->
+<head>
+    <meta charset="UTF-8"> <!-- Permite caracteres especiales correctamente -->
+    <title>Detalle de Venta</title> <!-- Título de la pestaña del navegador -->
+
+    <!-- Carga la hoja de estilos desde la carpeta static -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<!-- Título principal, muestra el número de la venta usando 'id_venta' enviado desde Flask -->
+<h2 style="text-align: center; margin-top: 30px; color: #3b2f23" class="titulo-productos">
+    Detalle de la Venta #{{ id_venta }}
+</h2>
+
+<!-- Tabla donde se mostrará el detalle de cada producto vendido -->
+<table class="tabla-proveedor"> <!-- Usa la clase de estilos 'tabla-proveedor' -->
+    <thead>
+        <tr> <!-- Encabezados de cada columna -->
+            <th>Producto</th> <!-- Nombre o descripción del producto -->
+            <th>Cantidad</th> <!-- Cantidad vendida -->
+            <th>Precio Unitario</th> <!-- Precio individual del producto -->
+            <th>Subtotal</th> <!-- Resultado de cantidad * precio -->
+        </tr>
+    </thead>
+
+    <tbody>
+        <!-- Recorre la lista 'detalle' que contiene los productos vendidos -->
+        {% for d in detalle %}
+        <tr>
+            <td>{{ d.producto }}</td> <!-- Nombre del producto -->
+            <td>{{ d.cantidad }}</td> <!-- Cantidad vendida -->
+            <td>{{ d.precio }}</td> <!-- Precio por unidad -->
+            <td>{{ d.subtotal }}</td> <!-- Subtotal del producto -->
+        </tr>
+        {% endfor %} <!-- Fin del ciclo que carga el detalle -->
+    </tbody>
+</table>
+
+<!-- Botón para volver a la lista de ventas -->
+<div style="text-align:center; margin-top:20px;">
+    <a href="/ventas" class="btn-menu">Volver</a>
+</div>
+
+</body>
+</html>

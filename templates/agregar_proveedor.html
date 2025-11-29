@@ -1,36 +1,55 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <!-- Indica la codificación de caracteres del documento -->
     <meta charset="UTF-8">
+
+    <!-- Título que aparece en la pestaña del navegador -->
     <title>Agregar Proveedor</title>
+
+    <!-- Enlace al archivo CSS principal -->
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
+<!-- Contenedor principal centrado para el formulario -->
 <div class="contenedor-formulario-proveedor">
+
+    <!-- Contenedor interno del formulario con estilos -->
     <div class="formulario-proveedor">
 
+        <!-- Título del formulario -->
         <h2>Agregar Proveedor</h2>
 
+        <!-- FORMULARIO PARA AGREGAR PROVEEDOR -->
         <form action="/proveedor/agregar" method="POST">
+
+            <!-- Campo: Nombre del proveedor -->
             <input type="text" name="nombre" placeholder="Nombre del proveedor" required>
 
+            <!-- Campo: Teléfono del proveedor -->
             <input type="text" name="telefono" placeholder="Teléfono" required>
 
+            <!-- Campo: Correo electrónico -->
             <input type="email" name="correo" placeholder="Correo" required>
 
+            <!-- Campo: Dirección física -->
             <input type="text" name="direccion" placeholder="Dirección" required>
 
+            <!-- Campo: Tipo de productos que provee -->
             <input type="text" name="tipo" placeholder="Tipo de productos que provee" required>
 
+            <!-- Botón para guardar los datos -->
             <button class="boton-guardar" type="submit">Guardar</button>
         </form>
 
+        <!-- Botón para cancelar y volver a la página de proveedores -->
         <div class="cancel-container">
             <button class="btn-menu" onclick="window.location.href='/proveedor'">
                 Cancelar
             </button>
         </div>
+
     </div>
 </div>
 

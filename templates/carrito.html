@@ -1,18 +1,24 @@
-<!DOCTYPE html>
-<html lang="es">
+<!DOCTYPE html> <!-- Indica que el documento sigue el estándar HTML5 -->
+<html lang="es"> <!-- Idioma principal del documento -->
 <head>
-    <meta charset="UTF-8">
-    <title>Carrito</title>
+    <meta charset="UTF-8"> <!-- Permite uso de caracteres con tildes y ñ -->
+    <title>Carrito</title> <!-- Título en la pestaña del navegador -->
+
+    <!-- Importa el archivo CSS desde la carpeta /static -->
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
 
+    <!-- ENCABEZADO DE LA PÁGINA -->
     <header class="header">
+
+        <!-- LOGO DEL NEGOCIO -->
         <div class="logo">
             <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo">
         </div>
 
+        <!-- MENÚ DE NAVEGACIÓN -->
         <nav class="nav">
             <a href="/" class="nav-btn">INICIO</a>
             <a href="/producto" class="nav-btn active">PRODUCTO</a>
@@ -21,8 +27,10 @@
         </nav>
     </header>
 
+<!-- TÍTULO PRINCIPAL -->
 <h1 class="titulo-carrito">Carrito de Compras</h1>
 
+<!-- TABLA QUE MUESTRA LOS PRODUCTOS DEL CARRITO -->
 <table class="tabla-carrito">
     <thead>
         <tr>
@@ -35,27 +43,38 @@
     </thead>
 
     <tbody>
-        {% for p in carrito %}
-        <tr data-titulo="{{ p.titulo|e }}">
+        {% for p in carrito %} <!-- Recorre cada producto del carrito -->
+        <tr data-titulo="{{ p.titulo|e }}"> <!-- Guarda el título como atributo del <tr> -->
+
+            <!-- NOMBRE DEL PRODUCTO -->
             <td class="td-titulo">{{ p.titulo }}</td>
 
+            <!-- CONTROL DE CANTIDAD -->
             <td class="td-cantidad">
-                <!-- controles a la izquierda del número (como pediste) -->
+
+                <!-- Contenedor que alinea flechas y número -->
                 <div class="cantidad-wrap" style="display:flex; align-items:center; gap:12px; justify-content:center;">
+
+                    <!-- Controles de sumar/restar (en columna → ⬆ ⬇) -->
                     <div class="cantidad-controles" style="display:flex; flex-direction:column; gap:6px;">
                         <button class="btn-cantidad" data-accion="sumar" type="button" aria-label="incrementar">⬆</button>
                         <button class="btn-cantidad" data-accion="restar" type="button" aria-label="disminuir">⬇</button>
                     </div>
 
-                    <!-- número editable: lo mostramos en un span, y lo reemplazamos por input si el usuario quiere editar -->
+                    <!-- Muestra el número actual de piezas -->
                     <span class="cantidad-num" data-cantidad="{{ p.cantidad }}">{{ p.cantidad }}</span>
                 </div>
             </td>
 
+            <!-- PRECIO DEL PRODUCTO -->
             <td class="td-precio">{{ p.precio }} $</td>
+
+            <!-- IMAGEN DEL PRODUCTO -->
             <td>
                 <img src="{{ p.imagen }}" class="img-carrito">
             </td>
+
+            <!-- BOTÓN PARA ELIMINAR EL ÍTEM -->
             <td>
                 <a href="/eliminar_item/{{ p.titulo }}" class="btn-eliminar">🗑️</a>
             </td>
@@ -64,34 +83,46 @@
     </tbody>
 </table>
 
+<!-- BOTÓN PARA AVANZAR AL FORMULARIO (solo si hay productos en el carrito) -->
 {% if carrito|length > 0 %}
 <button id="btn-siguiente" class="btn-siguiente">Siguiente</button>
 {% endif %}
 
+<!-- FORMULARIO DE DATOS DEL CLIENTE (se oculta inicialmente) -->
 <div id="formulario-compra" style="display:none;" class="formulario-compra">
     <h2>Datos del Comprador</h2>
 
-    <form>
+    <form action="/guardar_compra" method="POST">
+
+        <!-- CAMPOS DEL CLIENTE -->
         <label>Nombre:</label>
-        <input type="text" required>
+        <input type="text" name="nombre" required>
 
         <label>Correo:</label>
-        <input type="email" required>
+        <input type="email" name="correo" required>
 
         <label>Telefono:</label>
-        <input type="number" required>
+        <input type="number" name="telefono" required>
 
-        <label>Total:</label>
-        <input id="input-total" type="number" readonly>
+        <label>Dirección:</label>
+        <input type="text" name="direccion" required>
 
+        <!-- SE MUESTRA DETALLE GENERADO AUTOMÁTICAMENTE -->
+        <label>Detalle de la Compra:</label>
+        <textarea id="detalle-compra" name="detalle" readonly style="height:130px;"></textarea>
+
+        <!-- BOTÓN PARA FINALIZAR COMPRA -->
         <button type="submit" class="btn-finalizar">Finalizar compra</button>
+
     </form>
+
 </div>
 
-
+<!-- SCRIPT 1: Actualiza cantidades en tiempo real usando FETCH -->
 <script>
-// función para enviar la actualización por fetch y actualizar el DOM
+// función que envía actualización al backend (sumar/restar)
 async function enviarActualizar(titulo, accion, row) {
+
     try {
         const body = new URLSearchParams();
         body.append('titulo', titulo);
@@ -100,9 +131,7 @@ async function enviarActualizar(titulo, accion, row) {
         const resp = await fetch('/actualizar_cantidad', {
             method: 'POST',
             body: body,
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest' // marca como AJAX
-            }
+            headers: { 'X-Requested-With': 'XMLHttpRequest' } // marca como petición AJAX
         });
 
         if (!resp.ok) throw new Error('Respuesta no OK');
@@ -110,46 +139,50 @@ async function enviarActualizar(titulo, accion, row) {
         const data = await resp.json();
 
         if (data.ok) {
-            // si el producto fue removido (cantidad 0 o eliminado), refrescamos la página
+
+            // Si la cantidad llegó a 0, refresca la página
             if (data.removed) {
-                // si quieres evitar reload, puedes eliminar la fila: row.remove();
                 window.location.reload();
                 return;
             }
 
-            // actualizamos el número en la fila
+            // Actualiza la cantidad en pantalla
             const span = row.querySelector('.cantidad-num');
             if (span) {
                 span.textContent = data.cantidad;
                 span.dataset.cantidad = data.cantidad;
             }
-        } else {
-            console.warn('No se actualizó:', data);
         }
+
     } catch (err) {
         console.error('Error actualizar cantidad:', err);
     }
 }
+</script>
 
-// manejador de clicks para los botones de flecha
+<!-- SCRIPT 2: Manejo de botones de cantidad y edición directa -->
+<script>
 document.addEventListener('DOMContentLoaded', function() {
+
+    // Botones de flechas (sumar/restar)
     document.querySelectorAll('.btn-cantidad').forEach(btn => {
         btn.addEventListener('click', function(e) {
-            e.preventDefault(); // evita cualquier comportamiento por defecto
-            const accion = this.dataset.accion; // "sumar" o "restar"
+            e.preventDefault();
+            const accion = this.dataset.accion;
             const row = this.closest('tr');
             const titulo = row?.dataset?.titulo;
             if (!titulo) return;
-
             enviarActualizar(titulo, accion, row);
         });
     });
 
-    // permitir editar haciendo click sobre el número (opcional UX)
+    // Permite editar cantidad manualmente tocando el número
     document.querySelectorAll('.cantidad-num').forEach(span => {
         span.addEventListener('click', function() {
-            // reemplaza por input para edición directa
+
             const current = parseInt(this.dataset.cantidad || this.textContent || '1', 10);
+
+            // Crear input editable
             const input = document.createElement('input');
             input.type = 'number';
             input.min = 1;
@@ -167,34 +200,29 @@ document.addEventListener('DOMContentLoaded', function() {
                 input.remove();
                 this.style.display = '';
 
-                if (isNaN(newVal) || newVal <= 0) {
-                    // si es 0 o inválido, hacemos petición para eliminar
-                    const row = this.closest('tr');
-                    const titulo = row.dataset.titulo;
-                    await enviarActualizar(titulo, 'restar'); // restar una vez y backend eliminará si <=0
-                    // forzar recarga para reflejar eliminación
+                const row = this.closest('tr');
+                const titulo = row.dataset.titulo;
+
+                if (newVal <= 0) {
+                    // elimina el producto si vuelve 0
+                    await enviarActualizar(titulo, 'restar');
                     window.location.reload();
                     return;
                 }
 
-                // Si la nueva cantidad es distinta, calculamos la diferencia y enviamos acciones en bucle (simple)
                 const diff = newVal - current;
                 if (diff === 0) return;
 
-                const row = this.closest('tr');
-                const titulo = row.dataset.titulo;
-
-                // si diff > 0 -> enviar "sumar" diff veces; si diff < 0 -> "restar" |diff|
                 const accion = diff > 0 ? 'sumar' : 'restar';
                 const veces = Math.abs(diff);
 
-                // enviar secuencialmente (pequeña cantidad típica en carrito)
+                // Aplica cambios uno por uno
                 for (let i = 0; i < veces; i++) {
                     await enviarActualizar(titulo, accion, row);
                 }
             });
 
-            // también permitir Enter para confirmar
+            // Enter para confirmar
             input.addEventListener('keydown', (ev) => {
                 if (ev.key === 'Enter') {
                     ev.preventDefault();
@@ -203,64 +231,81 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     });
+
 });
 </script>
 
+<!-- SCRIPT 3: Botón "Siguiente" → Oculta carrito y muestra formulario -->
 <script>
-// Botón siguiente
 document.getElementById("btn-siguiente")?.addEventListener("click", function() {
-    
-    document.getElementById("btn-siguiente").style.display = "none";
 
-    // Oculta tabla
+    // Oculta elementos del carrito
+    document.getElementById("btn-siguiente").style.display = "none";
     document.querySelector(".tabla-carrito").style.display = "none";
     document.querySelector(".titulo-carrito").style.display = "none";
-    
+
     // Muestra formulario
     document.getElementById("formulario-compra").style.display = "block";
 
-    // Calcular total
+    // Calcula total y detalle
     let total = 0;
     document.querySelectorAll("tbody tr").forEach(fila => {
         let cantidad = parseInt(fila.querySelector(".cantidad-num").innerText);
-        let precio_texto = fila.children[2].innerText.replace("$","").trim();
-        let precio = parseFloat(precio_texto);
+        let precio = parseFloat(fila.children[2].innerText.replace("$","").trim());
         total += cantidad * precio;
     });
 
-    // Mostrar total (solo número)
-    document.getElementById("input-total").value = total;
+    let detalle = "";
+    document.querySelectorAll("tbody tr").forEach(fila => {
+        let nombre = fila.querySelector(".td-titulo").innerText;
+        let cantidad = parseInt(fila.querySelector(".cantidad-num").innerText);
+        let precio = parseFloat(fila.children[2].innerText.replace("$","").trim());
+        let subtotal = cantidad * precio;
+        detalle += `${nombre}  x${cantidad}  →  ${subtotal} $\n`;
+    });
+
+    detalle += `\nTOTAL: ${total} $`;
+
+    document.getElementById("detalle-compra").value = detalle;
+
 });
 </script>
 
+<!-- SCRIPT 4: Enviar compra con fetch y animación -->
 <script>
-document.querySelector(".formulario-compra form")?.addEventListener("submit", function(e){
-    e.preventDefault();  // Evita que recargue la página
+document.querySelector(".formulario-compra form")?.addEventListener("submit", async function(e){
 
-    // Crear alerta flotante
-    const alerta = document.createElement("div");
-    alerta.className = "alerta-compra";
-    alerta.innerHTML = `
-        <div class="alerta-contenido">
-            <h2>¡Gracias por tu compra! </h2>
-            <p>Tu pedido ha sido registrado exitosamente.</p>
-        </div>
-    `;
+    e.preventDefault(); // Evita recarga para permitir animación
 
-    document.body.appendChild(alerta);
+    const formData = new FormData(this);
 
-    // Desaparece y redirige después de 2.2s
-    setTimeout(async () => {
-        // Vacía carrito antes de redirigir
-        await fetch("/vaciar_carrito", { method: "POST" });
+    // Envía compra al backend
+    const resp = await fetch("/guardar_compra", {
+        method: "POST",
+        body: formData
+    });
 
-        window.location.href = "/producto";
-    }, 2500);
+    if (resp.status === 200 || resp.status === 302) {
 
+        // Muestra alerta animada
+        const alerta = document.createElement("div");
+        alerta.className = "alerta-compra";
+        alerta.innerHTML = `
+            <div class="alerta-contenido">
+                <h2>¡Gracias por tu compra!</h2>
+                <p>Tu pedido ha sido registrado exitosamente.</p>
+            </div>
+        `;
+        document.body.appendChild(alerta);
+
+        // Limpia carrito y redirige
+        setTimeout(async () => {
+            await fetch("/vaciar_carrito", { method: "POST" });
+            window.location.href = "/producto";
+        }, 2500);
+    }
 });
 </script>
-
 
 </body>
 </html>
-

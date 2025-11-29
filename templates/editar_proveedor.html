@@ -1,36 +1,48 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>Editar Proveedor</title>
+    <!-- Define el tipo de documento HTML -->
+    <meta charset="UTF-8"> <!-- Define codificación para caracteres especiales -->
+    <title>Editar Proveedor</title> <!-- Título de la pestaña del navegador -->
+
+    <!-- Enlace al archivo CSS que está en la carpeta static -->
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
+<!-- Contenedor principal que centra y organiza el formulario -->
 <div class="contenedor-formulario-proveedor">
-    <div class="formulario-proveedor">
+    <div class="formulario-proveedor"> <!-- Caja del formulario -->
 
-        <h2>Editar Proveedor</h2>
+        <h2>Editar Proveedor</h2> <!-- Título en pantalla -->
 
+        <!-- Formulario que envía los datos via POST a la misma URL -->
         <form action="" method="POST">
 
+            <!-- Campo para editar el nombre del proveedor -->
             <input type="text" name="nombre" value="{{ proveedor.Nombre }}" placeholder="Nombre" required>
 
+            <!-- Campo para editar el teléfono -->
             <input type="text" name="telefono" value="{{ proveedor.Telefono }}" placeholder="Teléfono" required>
 
+            <!-- Campo para editar el correo -->
             <input type="email" name="correo" value="{{ proveedor.Correo }}" placeholder="Correo" required>
 
+            <!-- Campo para editar la dirección -->
             <input type="text" name="direccion" value="{{ proveedor.Direccion }}" placeholder="Dirección" required>
 
+            <!-- Campo para editar el tipo de producto que provee -->
             <input type="text" name="tipo" value="{{ proveedor.Tipo_Producto }}" placeholder="Tipo de producto" required>
 
+            <!-- Botón para guardar los cambios -->
             <button class="boton-guardar" type="submit">Guardar Cambios</button>
 
         </form>
 
+        <!-- Contenedor del botón cancelar -->
         <div class="cancel-container">
             <button class="btn-menu" onclick="window.location.href='/proveedor'">
-                Cancelar
+                Cancelar <!-- Redirige a la página de proveedores -->
             </button>
         </div>
 

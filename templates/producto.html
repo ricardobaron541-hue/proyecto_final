@@ -1,9 +1,14 @@
 <!DOCTYPE html>
+<!-- Comentario: Indica el tipo de documento HTML5 -->
 <html lang="es">
 <head>
+    <!-- Declara la codificación de caracteres -->
     <meta charset="UTF-8">
+    <!-- Hace la página adaptable a dispositivos móviles -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Título que aparece en la pestaña del navegador -->
     <title>Productos - Dulce Conexión</title>
+    <!-- Enlace al archivo CSS usando url_for en Flask -->
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
@@ -12,9 +17,11 @@
     <!-- HEADER -->
     <header class="header">
         <div class="logo">
+            <!-- Muestra la imagen del logo cargada desde la carpeta static -->
             <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo">
         </div>
 
+        <!-- Barra de navegación -->
         <nav class="nav">
             <a href="/" class="nav-btn">INICIO</a>
             <a href="/producto" class="nav-btn active">PRODUCTO</a>
@@ -22,6 +29,7 @@
             <a href="/contacto" class="nav-btn">CONTACTO</a>
         </nav>
 
+        <!-- Íconos laterales: carrito y usuario -->
         <div class="icons">
             <button class="icon cart" title="Carrito" onclick="window.location.href='/carrito'">🛒</button>
             <button class="icon user" onclick="window.location.href='/login'">👤</button>
@@ -31,29 +39,35 @@
     <!-- CONTENIDO PRINCIPAL -->
     <main class="productos-main">
 
+        <!-- Título de la sección de productos -->
         <h2 class="titulo-productos">NUESTROS PRODUCTOS</h2>
 
-        <section class="contenedor-cards">
+        <!-- Contenedor de tarjetas -->
+    <section class="contenedor-cards">
 
-            {% for p in productos %}
-            <div class="card-producto" 
-                data-precio="{{ p.Precio }}"
-            >
-                <div class="card-imagen"
-                    style="background-image: url('{{ p.Imagen }}');">
-                </div>
-
-                <div class="card-info">
-                    <h3>{{ p.Nombre_Producto }}</h3>
-
-                    <p class="desc-oculta">
-                        {{ p.Descripcion }}
-                    </p>
-                </div>
+        <!-- Bucle para recorrer cada producto enviado desde Flask -->
+        {% for p in productos %}
+        <div class="card-producto"
+            data-precio="{{ p.Precio }}"
+        >
+            <!-- Imagen del producto como fondo mediante CSS -->
+            <div class="card-imagen"
+                style="background-image: url('{{ p.Imagen }}');">
             </div>
-            {% endfor %}
 
-        </section>
+            <div class="card-info">
+                <!-- Nombre del producto -->
+                <h3>{{ p.Nombre_Producto }}</h3>
+
+                <!-- Descripción completa del producto -->
+                <p class="desc-oculta">
+                    {{ p.Descripcion }}
+                </p>
+            </div>
+        </div>
+        {% endfor %}
+
+    </section>
 
 
     </main>
@@ -62,6 +76,7 @@
     <footer class="footer">
         <div class="footer-content">
 
+            <!-- Información del proyecto -->
             <div class="footer-left">
                 <h2 class="footer-logo">Dulce Conexión</h2>
                 <p>Proyecto universitario desarrollado por <strong>Ricardo Baron</strong>.</p>
@@ -69,12 +84,14 @@
                 <p>Versión 1.0 | 2025</p>
             </div>
 
+            <!-- Información de contacto -->
             <div class="footer-center">
                 <h3>Contacto</h3>
                 <p>📧 ricardo@uan.edu.co</p>
                 <p>📱 321 423 9806</p>
             </div>
 
+            <!-- Descripción tecnológica del proyecto -->
             <div class="footer-right">
                 <h3>Sobre el proyecto</h3>
                 <p>Aplicación web desarrollada con Flask, HTML y CSS.</p>
@@ -82,6 +99,7 @@
 
         </div>
 
+        <!-- Parte inferior del footer -->
         <div class="footer-bottom">
             © 2025 — Proyecto académico | Ricardo Baron
         </div>
@@ -97,24 +115,38 @@
     </div>
 </div>
 
+<!-- SCRIPT: Manejo de tarjetas y envío de datos al detalle -->
 <script>
-document.addEventListener("DOMContentLoaded", () => {
+// Espera que la página cargue completamente
+ document.addEventListener("DOMContentLoaded", () => {
+
+    // Selecciona todas las tarjetas de productos
     const cards = document.querySelectorAll(".card-producto");
 
+    // Recorre cada tarjeta
     cards.forEach(card => {
         card.addEventListener("click", () => {
 
-            // Obtener imagen correctamente
+            // EXTRAER LA IMAGEN:
             let imagen = card.querySelector(".card-imagen").style.backgroundImage;
-            imagen = imagen.slice(5, -2);   // quita url(" ... ")
 
+            // La propiedad backgroundImage devuelve: url("ruta")
+            // Esta línea quita el texto url("  y  ") dejando solo la ruta
+            imagen = imagen.slice(5, -2);
+
+            // Extraer el título del producto
             let titulo = card.querySelector("h3").innerText;
+
+            // Extraer descripción
             let descripcion = card.querySelector("p").innerText;
+
+            // Extraer precio desde el atributo personalizado data-precio
             let precio = card.getAttribute("data-precio");
 
-            // Enviar a la página detalle
+            // Crear la URL con los datos codificados para evitar errores
             const url = `/producto_detalle?titulo=${encodeURIComponent(titulo)}&descripcion=${encodeURIComponent(descripcion)}&imagen=${encodeURIComponent(imagen)}&precio=${encodeURIComponent(precio)}`;
 
+            // Redirigir al usuario al detalle del producto
             window.location.href = url;
         });
     });

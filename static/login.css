@@ -1,4 +1,9 @@
-body{
+/* ---------------------------------------------------------
+   BLOQUE 1: CONFIGURACIÓN GENERAL DEL CUERPO (BODY)
+   Centra el formulario de login vertical y horizontalmente.
+   Aplica el fondo con un degradado y define la fuente general.
+--------------------------------------------------------- */
+body{ 
 	margin: 0;
 	padding: 0;
 	display: flex;
@@ -8,23 +13,46 @@ body{
 	font-family: 'Jost', sans-serif;
 	background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
 }
+
+/* ---------------------------------------------------------
+   BLOQUE 2: CONTENEDOR PRINCIPAL (.main)
+   Es la tarjeta del login.
+   Tiene tamaño fijo, bordes redondeados, sombra y una imagen de fondo.
+--------------------------------------------------------- */
 .main{
 	width: 350px;
 	height: 500px;
-	background: red;
+	background: red; /* color base pero queda cubierto por la imagen */
 	overflow: hidden;
 	background: url("https://doc-08-2c-docs.googleusercontent.com/docs/securesc/68c90smiglihng9534mvqmq1946dmis5/fo0picsp1nhiucmc0l25s29respgpr4j/1631524275000/03522360960922298374/03522360960922298374/1Sx0jhdpEpnNIydS4rnN4kHSJtU1EyWka?e=view&authuser=0&nonce=gcrocepgbb17m&user=03522360960922298374&hash=tfhgbs86ka6divo3llbvp93mg4csvb38") no-repeat center/ cover;
 	border-radius: 10px;
 	box-shadow: 5px 20px 50px #000;
 }
+
+/* ---------------------------------------------------------
+   BLOQUE 3: INPUT OCULTO (#chk)
+   Este checkbox se usa como "interruptor" para mostrar login
+   o signup mediante animaciones. Está oculto.
+--------------------------------------------------------- */
 #chk{
 	display: none;
 }
+
+/* ---------------------------------------------------------
+   BLOQUE 4: CONTENEDOR FRASE (.frase)
+   Capa que permite colocar textos y animaciones encima del login.
+--------------------------------------------------------- */
 .frase{
 	position: relative;
 	width:100%;
 	height: 100%;
 }
+
+/* ---------------------------------------------------------
+   BLOQUE 5: ESTILOS DE LABELS
+   Estiliza los títulos de Login / Registro.
+   Hace que sea un botón clickable (por el checkbox).
+--------------------------------------------------------- */
 label{
 	color: #fff;
 	font-size: 2.3em;
@@ -35,6 +63,12 @@ label{
 	cursor: pointer;
 	transition: .5s ease-in-out;
 }
+
+/* ---------------------------------------------------------
+   BLOQUE 6: CAMPOS INPUT GENERALES
+   Campos para usuario y contraseña.
+   Centrados y con bordes redondeados.
+--------------------------------------------------------- */
 input{
 	width: 60%;
 	height: 10px;
@@ -47,6 +81,12 @@ input{
 	outline: none;
 	border-radius: 5px;
 }
+
+/* ---------------------------------------------------------
+   BLOQUE 7: BOTONES GENERALES
+   Botón de iniciar sesión o registrarse.
+   Estilo moderno con transición al pasar el cursor.
+--------------------------------------------------------- */
 button{
 	width: 60%;
 	height: 40px;
@@ -64,9 +104,20 @@ button{
 	transition: .2s ease-in;
 	cursor: pointer;
 }
+
+/* ---------------------------------------------------------
+   BLOQUE 8: EFECTO HOVER DEL BOTÓN
+   Cambia color cuando el usuario pasa el mouse.
+--------------------------------------------------------- */
 button:hover{
 	background: #6d44b8;
 }
+
+/* ---------------------------------------------------------
+   BLOQUE 9: CONTENEDOR DEL FORMULARIO LOGIN
+   Tiene una forma curvada (border-radius especial).
+   Se mueve mediante transformaciones cuando se activa el checkbox.
+--------------------------------------------------------- */
 .login{
 	height: 460px;
 	background: #eee;
@@ -75,11 +126,23 @@ button:hover{
 	transition: .8s ease-in-out;
 	overflow: hidden;
 }
+
+/* ---------------------------------------------------------
+   BLOQUE 10: LABEL DENTRO DEL LOGIN
+   Se hace más pequeño (animación inicial).
+--------------------------------------------------------- */
 .login label{
 	color: #573b8a;
 	transform: scale(.6);
 }
 
+/* ---------------------------------------------------------
+   BLOQUE 11: EFECTOS ACTIVADOS POR CHECKBOX
+   Cuando #chk está marcado:
+   - La sección login sube completamente.
+   - El label dentro de login vuelve a su tamaño normal.
+   - La sección de registro reduce el tamaño del label.
+--------------------------------------------------------- */
 #chk:checked ~ .login{
 	transform: translateY(-500px);
 }
@@ -90,6 +153,11 @@ button:hover{
 	transform: scale(.6);
 }
 
+/* ---------------------------------------------------------
+   BLOQUE 12: TITULO-FRASE (TEXTO ANIMADO DEL LOGIN)
+   Texto decorativo grande, centrado.
+   Tiene efecto de sombra y estilo elegante.
+--------------------------------------------------------- */
 .titulo-frase {
 	position: absolute;
 	top: 80px;
@@ -104,6 +172,10 @@ button:hover{
 	text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
 }
 
+/* ---------------------------------------------------------
+   BLOQUE 13: TITULO-FRASE SPAN
+   Permite que cada línea del texto se acomode como bloque.
+--------------------------------------------------------- */
 .titulo-frase span {
 	display: block;
 }

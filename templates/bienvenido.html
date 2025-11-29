@@ -1,32 +1,87 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
+    <!-- 
+        Se especifica la codificación de caracteres UTF-8 para permitir acentos, ñ, símbolos, etc.
+    -->
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 
+        Esta meta etiqueta hace que la página sea responsive, adaptándose a pantallas móviles.
+        viewport = controla el tamaño visible del sitio según el dispositivo.
+    -->
+
     <title>Página Inicio</title>
+    <!-- Título que se mostrará en la pestaña del navegador -->
+
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- 
+        Se enlaza el archivo CSS “style.css” que está dentro de la carpeta /static.
+        url_for asegura que Flask genere correctamente la ruta a ese archivo.
+    -->
 </head>
+
 <body>
+    <!-- INICIO DEL CUERPO DE LA PÁGINA -->
+
     <header class="header">
+        <!-- 
+            Encabezado principal.
+            Tiene la clase "header" para aplicarle estilos desde el CSS.
+        -->
+
         <div class="logo">
+            <!-- Contenedor del logo principal -->
+
             <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo de la empresa">
+            <!-- 
+                Muestra la imagen del logo cargándola desde /static/logo.png.
+                El atributo alt sirve para accesibilidad (texto alternativo).
+            -->
         </div>
 
         <nav class="nav">
-            <a href="/" class="nav-btn">INICIO</a>
-            <a href="/gestion_productos" class="nav-btn">Agregar - Editar producto</a>
-            <a href="#" class="nav-btn">VENTAS</a>
-            <a href="/proveedor" class="nav-btn">PROVEEDOR</a>
+            <!-- Menú de navegación principal -->
 
+            <a href="/" class="nav-btn">INICIO</a>
+            <!-- Botón que envía al usuario a la página de inicio -->
+
+            <a href="/gestion_productos" class="nav-btn">Agregar - Editar producto</a>
+            <!-- 
+                Botón que lleva a la página donde se gestionan
+                productos: agregar, editar, actualizar.
+            -->
+
+            <a href="/ventas" class="nav-btn">VENTAS</a>
+            <!-- Botón que dirige a la tabla de ventas registradas -->
+
+            <a href="/proveedor" class="nav-btn">PROVEEDOR</a>
+            <!-- Botón que lleva a la gestión de proveedores -->
         </nav>
 
     </header>
-    
+
     <main class="main">
+        <!-- 
+            Contenedor principal del contenido.
+            La clase "main" permite aplicar estilos a esta sección.
+        -->
+
         <section class="empresa">
+            <!-- 
+                Sección visual relacionada con la empresa.
+                Se puede usar para mostrar una imagen o fondo decorativo.
+            -->
+
             <div class="imagen-fondo"></div>
+            <!-- 
+                Este div probablemente tiene en el CSS una imagen de fondo.
+                Sirve para decorar la página de bienvenida.
+            -->
         </section>
     </main>
-    
+
 </body>
 </html>

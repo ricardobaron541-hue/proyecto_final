@@ -1,86 +1,132 @@
 <!DOCTYPE html>
+<!-- Declaración del tipo de documento HTML5 -->
 <html lang="es">
+<!-- Documento HTML configurado para idioma español -->
 <head>
     <meta charset="UTF-8">
+    <!-- Codificación UTF-8 para soportar caracteres especiales -->
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Hace que el diseño sea adaptable a dispositivos móviles -->
+
     <title>Nosotros - Dulce Conexión</title>
+    <!-- Título que se muestra en la pestaña del navegador -->
+
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- Carga la hoja de estilos principal usando url_for de Flask -->
 </head>
 <body>
     <!-- HEADER -->
     <header class="header">
+        <!-- Contenedor del encabezado -->
+
         <div class="logo">
+            <!-- Sección del logo -->
             <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo">
+            <!-- Inserta el logo desde los archivos estáticos -->
         </div>
 
         <nav class="nav">
+            <!-- Barra de navegación principal -->
             <a href="/" class="nav-btn">INICIO</a>
             <a href="/producto" class="nav-btn">PRODUCTO</a>
             <a href="/nosotros" class="nav-btn active">NOSOTROS</a>
+            <!-- Enlace marcado como activo porque corresponde a esta página -->
             <a href="/contacto" class="nav-btn">CONTACTO</a>
         </nav>
 
         <div class="icons">
+            <!-- Iconos del carrito y usuario -->
             <button class="icon cart" title="Carrito" onclick="window.location.href='/carrito'">🛒</button>
+            <!-- Botón que redirige al carrito -->
             <button class="icon user" title="Usuario" onclick="window.location.href='/login'">👤</button>
+            <!-- Botón que redirige al inicio de sesión -->
         </div>
     </header>
 
     <!-- MAIN -->
     <main class="main">
+        <!-- Contenido principal de la página -->
+
         <section class="nosotros-section">
+            <!-- Sección informativa "Nosotros" -->
+
             <div class="nosotros-contenido">
+                <!-- Contenedor que agrupa texto e imagen -->
+
                 <div class="nosotros-texto">
+                    <!-- Columna del texto descriptivo -->
                     <h2>DÉJATE ENDULZAR POR NUESTRA HISTORIA</h2>
+                    <!-- Título principal de la sección -->
+
                     <p>
                         En Dulce Conexión creemos que cada postre tiene el poder de alegrar el alma
                         y crear recuerdos inolvidables. Nacimos con la idea de compartir sabores únicos,
                         elaborados con dedicacion y amor, para todas las personas que disfrutan un momento
                         dulce en su día a día.
                     </p>
+                    <!-- Primer párrafo explicando la visión del proyecto -->
+
                     <p>
-                       Nuestros productos están elaborados con ingredientes naturales, recetas originales
-                       y un toque de creatividad que los hace únicos. Gracias por confiar en nosotros y
-                       permitirnos ser parte de tus momentos mas dulces.
+                        Nuestros productos están elaborados con ingredientes naturales, recetas originales
+                        y un toque de creatividad que los hace únicos. Gracias por confiar en nosotros y
+                        permitirnos ser parte de tus momentos mas dulces.
                     </p>
+                    <!-- Segundo párrafo con valores y agradecimiento -->
                 </div>
+
                 <div class="nosotros-imagen">
+                    <!-- Columna para la imagen -->
                     <img src="{{ url_for('static', filename='mockup.jpg') }}" alt="Repostería artesanal">
+                    <!-- Imagen representativa del proyecto, cargada desde archivos estáticos -->
                 </div>
             </div>
         </section>
     </main>
 
-        <!-- FOOTER -->
-        <footer class="footer">
-    <div class="footer-content">
-        <div class="footer-left">
-            <h2 class="footer-logo">Dulce Conexión</h2>
-            <p>Proyecto universitario desarrollado por <strong>Ricardo Baron</strong>.</p>
-            <p>Universidad UAN — T.E Contruccion De Software</p>
-            <p>Versión 1.0 | 2025</p>
-        </div>
+    <!-- FOOTER -->
+    <footer class="footer">
+        <!-- Pie de página principal -->
 
-        <div class="footer-center">
-            <h3>Contacto</h3>
-            <p>📧 ricardo@universidad.edu.co</p>
-            <p>📱 321 423 9806</p>
-            <div class="footer-social">
-                <a href="#" class="social-icon">💻</a>
-                <a href="#" class="social-icon">📸</a>
+        <div class="footer-content">
+            <!-- Contenedor para dividir el footer en columnas -->
+
+            <div class="footer-left">
+                <!-- Columna izquierda del footer -->
+                <h2 class="footer-logo">Dulce Conexión</h2>
+                <p>Proyecto universitario desarrollado por <strong>Ricardo Baron</strong>.</p>
+                <p>Universidad UAN — T.E Contruccion De Software</p>
+                <p>Versión 1.0 | 2025</p>
+            </div>
+
+            <div class="footer-center">
+                <!-- Columna central con información de contacto -->
+                <h3>Contacto</h3>
+                <p>📧 ricardo@universidad.edu.co</p>
+                <p>📱 321 423 9806</p>
+
+                <div class="footer-social">
+                    <!-- Iconos de redes sociales (actualmente con enlaces vacíos) -->
+                    <a href="#" class="social-icon">💻</a>
+                    <a href="#" class="social-icon">📸</a>
+                </div>
+            </div>
+
+            <div class="footer-right">
+                <!-- Columna derecha con descripción técnica del proyecto -->
+                <h3>Sobre el proyecto</h3>
+                <p>
+                    Aplicación web de repostería creada con <strong>Python (Flask)</strong>, HTML, CSS y enfoque en
+                    <strong>Programación Orientada a Objetos y Conexion a Bases De Datos</strong>.
+                </p>
             </div>
         </div>
 
-        <div class="footer-right">
-            <h3>Sobre el proyecto</h3>
-            <p>Aplicación web de repostería creada con <strong>Python (Flask)</strong>, HTML, CSS y enfoque en <strong>Programación Orientada a Objetos y Conexion a Bases De Datos</strong>.</p>
+        <div class="footer-bottom">
+            <!-- Línea inferior del footer -->
+            <p>© 2025 — Proyecto académico | Desarrollado por Ricardo Baron</p>
         </div>
-    </div>
-
-    <div class="footer-bottom">
-        <p>© 2025 — Proyecto académico | Desarrollado por Ricardo Baron</p>
-    </div>
-</footer>
+    </footer>
 
 </body>
 </html>

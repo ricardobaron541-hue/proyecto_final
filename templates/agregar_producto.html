@@ -1,38 +1,67 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    <!-- Declaración del tipo de documento HTML5 -->
+
     <meta charset="UTF-8">
+    <!-- Configura la codificación de caracteres para permitir acentos y caracteres especiales -->
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Hace que la página sea adaptable a móviles y pantallas pequeñas -->
+
     <title>Agregar Producto</title>
+    <!-- Título que se mostrará en la pestaña del navegador -->
+
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- Importa el archivo CSS principal desde la carpeta /static -->
 </head>
+
 <body>
 
 <h2 class="titulo-form">Agregar Producto</h2>
+<!-- Título principal del formulario -->
 
 <div class="form-contenedor">
+    <!-- Contenedor general del formulario para centrarlo y estilizarlo -->
+
     <form action="/producto/agregar" method="POST" class="form-producto">
+        <!-- Formulario que envía los datos mediante POST hacia la ruta /producto/agregar -->
 
         <label>Nombre del Producto:</label>
+        <!-- Etiqueta para el campo de nombre -->
         <input type="text" name="nombre" required>
+        <!-- Campo donde el usuario escribe el nombre del producto -->
 
         <label>Descripción:</label>
+        <!-- Etiqueta para la descripción -->
         <textarea name="descripcion" required></textarea>
+        <!-- Área de texto donde se escribe una descripción más larga del producto -->
 
         <label>URL de Imagen:</label>
+        <!-- Etiqueta para el enlace de imagen -->
         <input type="text" name="imagen">
+        <!-- Campo para pegar la URL de la imagen del producto (no obligatorio) -->
 
         <label>Precio:</label>
+        <!-- Etiqueta del precio -->
         <input type="number" name="precio" required>
+        <!-- Campo numérico para establecer el precio del producto -->
 
         <label>Stock:</label>
+        <!-- Etiqueta del stock -->
         <input type="number" name="stock" required>
+        <!-- Campo numérico para indicar la cantidad disponible -->
 
         <label>Fecha de Vencimiento:</label>
+        <!-- Etiqueta para la fecha -->
         <input type="date" name="fecha" required>
+        <!-- Campo de selección de fecha -->
 
         <button type="submit" class="btn-guardar">Guardar Producto</button>
+        <!-- Botón para enviar el formulario y guardar los datos -->
+
         <a href="/gestion_productos" class="btn-cancelar">Cancelar</a>
+        <!-- Enlace estilizado como botón para volver sin guardar -->
 
     </form>
 </div>

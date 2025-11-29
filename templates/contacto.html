@@ -1,56 +1,101 @@
 <!DOCTYPE html>
+<!-- Declaración del tipo de documento HTML5 -->
 <html lang="es">
+<!-- Configura el documento en idioma español -->
 <head>
     <meta charset="UTF-8">
+    <!-- Codificación estándar para soportar caracteres especiales -->
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Garantiza diseño responsivo en móviles -->
+
     <title>Contacto - Dulce Conexión</title>
+    <!-- Título visible en la pestaña del navegador -->
+
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- Enlace a la hoja de estilos principal usando Flask -->
 </head>
 <body>
 <header class="header">
+    <!-- Encabezado principal que contiene logo, menú y botones -->
+
     <div class="logo">
+        <!-- Contenedor del logo -->
         <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo">
+        <!-- Logo cargado desde archivos estáticos -->
     </div>
 
     <nav class="nav">
+        <!-- Barra de navegación -->
         <a href="/" class="nav-btn">INICIO</a>
         <a href="/producto" class="nav-btn">PRODUCTO</a>
         <a href="/nosotros" class="nav-btn">NOSOTROS</a>
         <a href="/contacto" class="nav-btn active">CONTACTO</a>
+        <!-- Enlace marcado como activo porque es la página actual -->
     </nav>
 
     <div class="icons">
+        <!-- Iconos de acciones rápidas: carrito y login -->
         <button class="icon cart" title="Carrito" onclick="window.location.href='/carrito'">🛒</button>
+        <!-- Redirige al carrito -->
         <button class="icon user" title="Usuario" onclick="window.location.href='/login'">👤</button>
+        <!-- Redirige al login -->
     </div>
 </header>
 
 <main class="main">
+    <!-- Contenedor principal del contenido -->
+
     <section class="contacto-section">
+        <!-- Sección especial para el formulario de contacto -->
+
         <div class="contacto-cuadro">
+            <!-- Cuadro centrado que contiene el formulario -->
+
             <h2>Contáctanos</h2>
+            <!-- Título principal del formulario -->
+
             <form method="POST" action="/contacto" class="contacto-form">
+                <!-- Formulario que enviará datos al servidor mediante método POST a la ruta /contacto -->
+
                 <input type="text" name="nombre" placeholder="Tu nombre" required>
+                <!-- Campo para nombre, obligatorio -->
+
                 <input type="email" name="correo" placeholder="Tu correo" required>
+                <!-- Campo para correo electrónico con validación de formato -->
+
                 <input type="tel" name="telefono" placeholder="Teléfono" class="campo-telefono" required>
+                <!-- Campo para teléfono, obligatorio -->
+
                 <textarea name="mensaje" placeholder="Deja tu mensaje aquí..." required></textarea>
+                <!-- Área de texto para mensaje del usuario -->
+
                 <input type="submit" value="Enviar" class="campo-boton">
+                <!-- Botón de envío del formulario -->
             </form>
 
             {% if mensaje_enviado %}
+            <!-- Condición Jinja: si el servidor indica que el mensaje fue enviado, se muestra una alerta -->
             <div class="mensaje-exito">
+                <!-- Contenedor del mensaje de éxito -->
                 <p>TU OPINIÓN ES MUY IMPORTANTE PARA NOSOTROS.
                     ¡GRACIAS POR AYUDARNOS A MEJORAR!
                 </p>
             </div>
             {% endif %}
-        </div> 
+            <!-- Fin del bloque condicional -->
+        </div>
     </section>
 </main>
 
 <footer class="footer">
+    <!-- Pie de página general del sitio -->
+
     <div class="footer-content">
+        <!-- Contenedor dividido por columnas -->
+
         <div class="footer-left">
+            <!-- Primera columna del footer -->
             <h2 class="footer-logo">Dulce Conexión</h2>
             <p>Proyecto universitario desarrollado por <strong>Ricardo Baron</strong>.</p>
             <p>Universidad UAN — T.E Contruccion De Software</p>
@@ -58,22 +103,27 @@
         </div>
 
         <div class="footer-center">
+            <!-- Segunda columna: datos de contacto -->
             <h3>Contacto</h3>
             <p>📧 ricardo@universidad.edu.co</p>
             <p>📱 321 423 9806</p>
+
             <div class="footer-social">
+                <!-- Iconos de redes sociales -->
                 <a href="#" class="social-icon">💻</a>
                 <a href="#" class="social-icon">📸</a>
             </div>
         </div>
 
         <div class="footer-right">
+            <!-- Tercera columna: descripción técnica del proyecto -->
             <h3>Sobre el proyecto</h3>
             <p>Aplicación web de repostería creada con <strong>Python (Flask)</strong>, HTML, CSS y enfoque en <strong>Programación Orientada a Objetos y Conexion a Bases De Datos</strong>.</p>
         </div>
     </div>
 
     <div class="footer-bottom">
+        <!-- Parte inferior del footer -->
         <p>© 2025 — Proyecto académico | Desarrollado por Ricardo Baron</p>
     </div>
 </footer>

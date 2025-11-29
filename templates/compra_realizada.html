@@ -1,0 +1,29 @@
+<!DOCTYPE html> <!-- Define que el documento usa HTML5 -->
+<html lang="es"> <!-- Indica que el idioma principal es español -->
+<head>
+    <meta charset="UTF-8"> <!-- Permite caracteres especiales como tildes -->
+    <title>Compra Realizada</title> <!-- Título que aparece en la pestaña del navegador -->
+
+    <!-- Enlace para cargar los estilos desde static/style.css -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<!-- Título del mensaje final de compra -->
+<h2 style="text-align:center; margin-top:40px; color:#3b2f23;">
+    <!-- Muestra un mensaje personalizado con el nombre del comprador enviado desde Flask -->
+    ¡Gracias por tu compra, {{ comprador }}! 🎉
+</h2>
+
+<!-- Contenedor del botón para volver al inicio -->
+<div style="text-align:center; margin-top:30px;">
+    
+    <!-- Botón que redirige a la página principal -->
+    <button class="btn-menu" onclick="window.location.href='/'">
+        Volver al inicio
+    </button>
+
+</div>
+
+</body>
+</html>

@@ -1,52 +1,56 @@
 <!DOCTYPE html>
+<!-- Documento HTML donde se muestra el detalle individual de un producto -->
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ titulo }}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <meta charset="UTF-8"> <!-- Define codificación de caracteres -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Ajuste responsivo -->
+    <title>{{ titulo }}</title> <!-- Título dinámico con el nombre del producto -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"> <!-- Vincula hoja CSS -->
 </head>
 
 <body>
 
-<div class="detalle-fondo">
-    <div class="detalle-container">
+<!-- CONTENEDOR GENERAL DEL FONDO -->
+<div class="detalle-fondo"> <!-- Fondo decorativo para la página de detalle -->
+    <div class="detalle-container"> <!-- Contenedor principal que alinea imagen e información -->
 
-        <!-- ------- SOLO IMAGEN PRINCIPAL (SIN MINIATURAS) ------- -->
-        <div class="detalle-galeria">
+        <!-- ---------------- GALERÍA (SOLO IMAGEN PRINCIPAL) ---------------- -->
+        <div class="detalle-galeria"> <!-- Sección donde va la imagen grande del producto -->
 
-            <div class="detalle-imagen-principal">
-                <img id="imgPrincipal" src="{{ imagen }}" alt="">
+            <div class="detalle-imagen-principal"> <!-- Contenedor de la imagen principal -->
+                <img id="imgPrincipal" src="{{ imagen }}" alt=""> <!-- Imagen cargada dinámicamente -->
             </div>
 
         </div>
 
-        <!-- ------- INFORMACIÓN DERECHA ------- -->
-        <div class="detalle-info">
+        <!-- ---------------- INFORMACIÓN DEL PRODUCTO ---------------- -->
+        <div class="detalle-info"> <!-- Contenedor del texto y botones del producto -->
 
-            <!-- ❌ Quitado: "Inicio / Productos / ..." -->
-            <!-- <p class="breadcrumb">Inicio / Productos / {{ titulo }}</p> -->
+            <!-- TÍTULO DEL PRODUCTO -->
+            <h1 class="detalle-titulo">{{ titulo }}</h1> <!-- Nombre dinámico -->
 
-            <h1 class="detalle-titulo">{{ titulo }}</h1>
+            <!-- PRECIO DEL PRODUCTO -->
+            <h2 class="detalle-precio">$ {{ precio }} </h2> <!-- Precio dinámico -->
 
-            <h2 class="detalle-precio">$ {{ precio }} </h2>
+            <div class="separador"></div> <!-- Línea divisoria -->
 
-            <div class="separador"></div>
-
-            <p class="detalle-descripcion">
+            <!-- DESCRIPCIÓN DEL PRODUCTO -->
+            <p class="detalle-descripcion"> <!-- Descripción dinámica -->
                 {{ descripcion }}
             </p>
 
-            <form id="formAgregarCarrito" action="/agregar_carrito" method="POST">
-                <input type="hidden" name="titulo" value="{{ titulo }}">
-                <input type="hidden" name="precio" value="{{ precio }}">
-                <input type="hidden" name="imagen" value="{{ imagen }}">
+            <!-- FORMULARIO PARA AGREGAR AL CARRITO -->
+            <form id="formAgregarCarrito" action="/agregar_carrito" method="POST"> <!-- POST para enviar datos al servidor -->
+                <!-- Campos ocultos para enviar información del producto -->
+                <input type="hidden" name="titulo" value="{{ titulo }}"> <!-- Enviar nombre -->
+                <input type="hidden" name="precio" value="{{ precio }}"> <!-- Enviar precio -->
+                <input type="hidden" name="imagen" value="{{ imagen }}"> <!-- Enviar imagen -->
     
-                <button class="btn-carrito" type="submit">AGREGAR AL CARRITO</button>
+                <button class="btn-carrito" type="submit">AGREGAR AL CARRITO</button> <!-- Botón principal -->
             </form>
 
-
-            <button onclick="window.history.back()" class="btn-volver">Volver</button>
+            <!-- BOTÓN PARA VOLVER A LA PÁGINA ANTERIOR -->
+            <button onclick="window.history.back()" class="btn-volver">Volver</button> <!-- Regresa a la página anterior -->
 
         </div>
 
@@ -54,30 +58,33 @@
 
 </div>
 
-<div id="mensajeAgregado">
+<!-- MENSAJE EMERGENTE AL AGREGAR AL CARRITO -->
+<div id="mensajeAgregado"> <!-- Oculto por defecto, aparece cuando el producto se agrega -->
     Producto agregado con éxito ✔️
 </div>
 
 
+<!-- ---------------- SCRIPT PARA AGREGAR AL CARRITO SIN RECARGAR ---------------- -->
 <script>
-document.addEventListener("DOMContentLoaded", () => {
-    const form = document.querySelector("#formAgregarCarrito");
+document.addEventListener("DOMContentLoaded", () => { // Espera a que cargue toda la página
+    const form = document.querySelector("#formAgregarCarrito"); // Selecciona el formulario
 
     form.addEventListener("submit", async function(e){
-        e.preventDefault();  // evita el reload
+        e.preventDefault();  // Evita recargar la página durante el envío
         
-        const formData = new FormData(form);
+        const formData = new FormData(form); // Crea un contenedor con los datos del formulario
 
-        let respuesta = await fetch("/agregar_carrito", {
+        let respuesta = await fetch("/agregar_carrito", { // Enviar datos al backend
             method: "POST",
             body: formData
         });
 
+        // Si el backend responde "OK", mostrar mensaje animado
         if(await respuesta.text() === "OK"){
             let msg = document.getElementById("mensajeAgregado");
-            msg.style.display = "block";
+            msg.style.display = "block"; // Mostrar mensaje
 
-            setTimeout(() => {
+            setTimeout(() => { // Oculta el mensaje después de 2 segundos
                 msg.style.display = "none";
             }, 2000);
         }
@@ -87,5 +94,3 @@ document.addEventListener("DOMContentLoaded", () => {
 
 </body>
 </html>
-
-

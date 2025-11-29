@@ -1,63 +1,106 @@
 <!DOCTYPE html>
+<!-- Declaración del tipo de documento HTML5. Indica al navegador que use el estándar HTML5. -->
 <html lang="es">
+<!-- Elemento raíz del documento. lang="es" especifica que el contenido está en español. -->
 <head>
+    <!-- Metadatos y recursos del documento (no se muestran directamente en la página). -->
     <meta charset="UTF-8">
+    <!-- Define la codificación de caracteres como UTF-8 (soporta caracteres acentuados y símbolos). -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Hace que la página sea responsiva: la anchura del viewport coincide con la del dispositivo. -->
     <title>Página Inicio</title>
+    <!-- Título que aparece en la pestaña del navegador. -->
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- Enlace a la hoja de estilos CSS.
+         Nota: se usa la función url_for de Flask para generar la ruta correcta hacia el archivo
+         estático 'style.css'. Esto se procesa en el servidor antes de enviar el HTML al cliente. -->
 </head>
 <body>
+    <!-- Cuerpo visible de la página. -->
     <header class="header">
+        <!-- Cabecera principal del sitio: normalmente contiene logo, navegación e iconos de usuario/carrito. -->
         <div class="logo">
+            <!-- Contenedor del logo. -->
             <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo de la empresa">
+            <!-- Imagen del logo. Se utiliza url_for para obtener la ruta al archivo estático 'logo.png'.
+                 El atributo alt proporciona texto alternativo para accesibilidad si la imagen no carga. -->
         </div>
 
         <nav class="nav">
+            <!-- Elemento de navegación con enlaces principales del sitio. -->
             <a href="/" class="nav-btn">INICIO</a>
+            <!-- Enlace a la página principal. class="nav-btn" sirve para aplicar estilos CSS. -->
             <a href="/producto" class="nav-btn">PRODUCTO</a>
+            <!-- Enlace a la sección de productos. -->
             <a href="/nosotros" class="nav-btn">NOSOTROS</a>
+            <!-- Enlace a la página 'Nosotros' con información del equipo/proyecto. -->
             <a href="/contacto" class="nav-btn">CONTACTO</a>
+            <!-- Enlace a la página de contacto. -->
         </nav>
 
         <div class="icons">
+            <!-- Contenedor para iconos de acciones rápidas (carrito, usuario...). -->
             <button class="icon cart" title="Carrito" onclick="window.location.href='/carrito'">🛒</button>
+            <!-- Botón que redirige al carrito. title proporciona un tooltip al pasar el cursor.
+                 onclick usa JavaScript inline para cambiar la ubicación del navegador. -->
             <button class="icon user" title="Usuario" onclick="window.location.href='/login'">👤</button>
+            <!-- Botón que redirige a la página de login/usuario. -->
 
         </div>
     </header>
     
     <main class="main">
+        <!-- Contenido principal de la página. -->
         <section class="empresa">
+            <!-- Sección dedicada a la presentación de la empresa o imagen principal. -->
             <div class="imagen-fondo"></div>
+            <!-- Contenedor pensado para mostrar una imagen de fondo mediante CSS (ej: background-image).
+                 No contiene contenido textual — asegúrate de que la imagen tenga alternativas accesibles
+                 o que haya contenido textual adicional si es importante para usuarios con lector de pantalla. -->
         </section>
     </main>
 
     <footer class="footer">
+    <!-- Pie de página: información de contacto, créditos y descripción del proyecto. -->
     <div class="footer-content">
+        <!-- Contenedor para organizar el contenido del footer en varias columnas. -->
         <div class="footer-left">
+            <!-- Columna izquierda: logo y créditos. -->
             <h2 class="footer-logo">Dulce Conexión</h2>
+            <!-- Nombre del proyecto o marca dentro del footer. -->
             <p>Proyecto universitario desarrollado por <strong>Ricardo Baron</strong>.</p>
+            <!-- Crédito del autor. -->
             <p>Universidad UAN — T.E Contruccion De Software</p>
+            <!-- Información académica o institucional. -->
             <p>Versión 1.0 | 2025</p>
+            <!-- Versión y año del proyecto. -->
         </div>
 
         <div class="footer-center">
+            <!-- Columna central: contactos. -->
             <h3>Contacto</h3>
             <p>📧 ricardo@universidad.edu.co</p>
+            <!-- Correo de contacto (texto estático). Si deseas proteger el correo del spam,
+                 considera generar el enlace o mostrarlo vía JS o usar un formulario de contacto. -->
             <p>📱 321 423 9806</p>
+            <!-- Número de teléfono (texto estático). -->
             <div class="footer-social">
+                <!-- Enlaces a redes sociales u otros recursos; actualmente usan '#' como placeholder. -->
                 <a href="#" class="social-icon">💻</a>
                 <a href="#" class="social-icon">📸</a>
             </div>
         </div>
 
         <div class="footer-right">
+            <!-- Columna derecha: descripción breve del proyecto. -->
             <h3>Sobre el proyecto</h3>
             <p>Aplicación web de repostería creada con <strong>Python (Flask)</strong>, HTML, CSS y enfoque en <strong>Programación Orientada a Objetos y Conexion a Bases De Datos</strong>.</p>
+            <!-- Breve nota técnica sobre tecnologías usadas. -->
         </div>
     </div>
 
     <div class="footer-bottom">
+        <!-- Barra inferior del footer con derechos de autor o mensaje adicional. -->
         <p>© 2025 — Proyecto académico | Desarrollado por Ricardo Baron</p>
     </div>
 </footer>

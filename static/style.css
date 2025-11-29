@@ -248,7 +248,7 @@ body {
     text-align: center;
     color: #3b2f23;
     padding: 60px;
-    background: rgba(255, 255, 255, 0.3); /* un leve fondo blanco translúcido */
+    background: #e2c6a3; /* un leve fondo blanco translúcido */
     border-radius: 20px;
     backdrop-filter: blur(4px);
     width: 100%;
@@ -872,6 +872,15 @@ body {
     cursor: pointer;
     border-radius: 6px;
 }
+#detalle-compra {
+    background: rgba(255,255,255,0.9) !important;
+    border-radius: 14px;
+    border: none;
+    padding: 14px;
+    box-shadow: inset 0 0 8px rgba(0,0,0,0.15);
+    font-size: 15px;
+    color: #3b2f23;
+}
 
 /* ALERTA FINAL DE COMPRA */
 .alerta-compra {
@@ -1325,17 +1334,4 @@ body {
 .btn-guardar {
     margin-bottom: 15px; /* espacio entre Guardar y Cancelar */
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
